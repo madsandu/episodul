@@ -1,0 +1,28 @@
+## field.field.node.series.tvdb_actors.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_actors
+    - node.type.serie
+    - taxonomy.vocabulary.actors
+id: node.serie.tvdb_actors
+field_name: tvdb_actors
+entity_type: node
+bundle: serie
+label: Actors
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      actors: actors
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

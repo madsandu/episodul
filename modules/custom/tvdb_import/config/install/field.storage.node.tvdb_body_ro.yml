@@ -1,0 +1,23 @@
+# field.storage.node.tvdb_body_ro.yml
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - tvdb_import 
+  module:
+    - node
+    - tvdb_import
+id: node.tvdb_body_ro
+field_name: tvdb_body_ro
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

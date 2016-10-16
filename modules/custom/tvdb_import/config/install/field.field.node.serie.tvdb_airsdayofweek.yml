@@ -1,0 +1,19 @@
+## field.field.node.series.tvdb_airsdayofweek.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_airsdayofweek
+    - node.type.serie
+id: node.serie.tvdb_airsdayofweek
+field_name: tvdb_airsdayofweek
+entity_type: node
+bundle: serie
+label: 'Airs Day Of Week'
+description: 'Day of the week when the show airs'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,5 @@
+name: 'TVDB Import'
+type: module
+description: 'Handles the import of series and episodes from www.thetvdb.com'
+package: Custom
+core: '8.x'

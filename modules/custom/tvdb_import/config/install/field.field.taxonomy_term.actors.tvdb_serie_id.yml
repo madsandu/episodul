@@ -1,0 +1,23 @@
+## field.field.taxonomy_term.actors.tvdb_serie_id.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.tvdb_serie_id
+    - taxonomy.vocabulary.actors
+id: taxonomy_term.actors.tvdb_serie_id
+field_name: tvdb_serie_id
+entity_type: taxonomy_term
+bundle: actors
+label: 'Series ID'
+description: 'ID of the conected series'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

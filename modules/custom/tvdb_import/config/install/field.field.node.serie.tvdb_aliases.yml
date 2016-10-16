@@ -1,0 +1,19 @@
+## field.field.node.series.tvdb_aliases.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_aliases
+    - node.type.serie
+id: node.serie.tvdb_aliases
+field_name: tvdb_aliases
+entity_type: node
+bundle: serie
+label: AKA
+description: 'Also Known As'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

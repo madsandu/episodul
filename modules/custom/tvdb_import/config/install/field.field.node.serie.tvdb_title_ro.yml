@@ -1,0 +1,19 @@
+## field.field.node.series.tvdb_title_ro.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_title_ro
+    - node.type.serie
+id: node.serie.tvdb_title_ro
+field_name: tvdb_title_ro
+entity_type: node
+bundle: serie
+label: 'RO Title'
+description: 'Romanian title if available'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

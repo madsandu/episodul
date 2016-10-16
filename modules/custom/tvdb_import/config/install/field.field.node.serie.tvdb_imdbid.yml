@@ -1,0 +1,19 @@
+## field.field.node.series.tvdb_imdbid.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_imdbid
+    - node.type.serie
+id: node.serie.tvdb_imdbid
+field_name: tvdb_imdbid
+entity_type: node
+bundle: serie
+label: 'IMDB id'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

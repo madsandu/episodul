@@ -1,0 +1,23 @@
+## field.field.node.series.tvdb_runtime.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_runtime
+    - node.type.serie
+id: node.serie.tvdb_runtime
+field_name: tvdb_runtime
+entity_type: node
+bundle: serie
+label: Runtime
+description: 'Duration of an episode'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: min
+field_type: float

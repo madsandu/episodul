@@ -1,0 +1,23 @@
+## field.field.node.series.tvdb_lastupdated.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_lastupdated
+    - node.type.serie
+id: node.serie.rvdb_lastupdated
+field_name: tvdb_lastupdated
+entity_type: node
+bundle: serie
+label: 'Last Updated'
+description: 'Timestamp of when the series was last updated on TVDB'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

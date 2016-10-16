@@ -1,0 +1,21 @@
+tvdb_import.admin:
+  title: 'TVDB'
+  description: 'Import data from TVDB'
+  parent: system.admin_config_services
+  route_name: tvdb_import.admin
+  menu_name: 'TVDB'
+
+tvdb_import.import_form:
+  title: 'TVDB Import'
+  description: 'Add series and episodes'
+  parent: tvdb_import.admin
+  route_name: tvdb_import.import_form
+  menu_name: 'TVDB'
+
+tvdb_import.settings_form:
+  title: 'TVDB Settings'
+  description: 'Edit TVDB credentials'
+  parent: tvdb_import.admin
+  route_name: tvdb_import.settings_form
+  menu_name: 'TVDB'
+  

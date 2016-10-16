@@ -1,0 +1,14 @@
+tvdb_import.admin:
+  title: 'Status'
+  route_name: tvdb_import.admin
+  base_route: tvdb_import.admin
+
+tvdb_import.import_form:
+  title: 'Add series'
+  route_name: tvdb_import.import_form
+  base_route: tvdb_import.admin
+  
+tvdb_import.settings_form:
+  title: 'Configuration'
+  route_name: tvdb_import.settings_form
+  base_route: tvdb_import.admin

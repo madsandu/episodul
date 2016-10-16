@@ -1,0 +1,23 @@
+tvdb_import.admin:
+  path: '/admin/tvdb'
+  defaults:
+    _title: 'TVDB'
+    _form: 'Drupal\tvdb_import\Form\TVDBStatusForm'
+  requirements:
+    _permission: 'administer tvdb_import settings'
+    
+tvdb_import.settings_form:
+  path: '/admin/tvdb/settings'
+  defaults:
+    _title: 'TVDB Settings'
+    _form: 'Drupal\tvdb_import\Form\TVDBSettingsForm'
+  requirements:
+    _permission: 'administer tvdb_import settings'
+    
+tvdb_import.import_form:
+  path: '/admin/tvdb/import'
+  defaults:
+    _title: 'TVDB Import'
+    _form: 'Drupal\tvdb_import\Form\TVDBImportForm'
+  requirements:
+    _permission: 'administer tvdb_import settings'

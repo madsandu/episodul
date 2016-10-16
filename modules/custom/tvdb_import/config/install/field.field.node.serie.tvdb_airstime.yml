@@ -1,0 +1,19 @@
+## field.field.node.series.tvdb_airstime.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_airstime
+    - node.type.serie
+id: node.serie.tvdb_airstime
+field_name: tvdb_airstime
+entity_type: node
+bundle: serie
+label: 'Airs Time'
+description: 'Usual time when the show airs'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

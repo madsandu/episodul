@@ -1,0 +1,19 @@
+## field.field.node.series.tvdb_network.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_network
+    - node.type.serie
+id: node.serie.tvdb_network
+field_name: tvdb_network
+entity_type: node
+bundle: serie
+label: Network
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
