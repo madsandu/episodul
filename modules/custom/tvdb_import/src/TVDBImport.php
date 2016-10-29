@@ -253,6 +253,9 @@ class TVDBImport extends TVDBConnect {
             // title
             if (isset($data->episodeName) && !empty($data->episodeName)) {
                 $node['title'] = $data->episodeName;
+            } 
+            else {
+                $node['title'] = t('Episode @number', array('@number' => $data->airedEpisodeNumber));
             }
             // body
             if (isset($data->overview) && !empty($data->overview)) {
@@ -359,7 +362,7 @@ class TVDBImport extends TVDBConnect {
             switch($type) {
                 case 'genres':
                     $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type));
-                    if (is_null($genre)) {
+                    if (is_null($genre) || empty($genre)) {
                         $this->add_genre($value);
                         $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type));
                         $count++;

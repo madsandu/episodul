@@ -16,5 +16,5 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  description: true
+  description: false
   path: true
