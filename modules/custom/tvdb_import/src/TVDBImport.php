@@ -358,13 +358,13 @@ class TVDBImport extends TVDBConnect {
         foreach ($taxonomies as $value) {
             switch($type) {
                 case 'genres':
-                    $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type))[0];
+                    $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type));
                     if (is_null($genre)) {
                         $this->add_genre($value);
-                        $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type))[0];
+                        $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type));
                         $count++;
                     }
-                    $node[] = $genre;
+                    $node[] = $genre[0];
                     break;
                 case 'actors':
                     $node[] = $value;

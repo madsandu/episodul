@@ -1,0 +1,48 @@
+## core.entity_form_display.taxonomy_term.actors.default.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.actors.tvdb_author_image
+    - field.field.taxonomy_term.actors.tvdb_role
+    - field.field.taxonomy_term.actors.tvdb_serie_id
+    - image.style.thumbnail
+    - taxonomy.vocabulary.actors
+  module:
+    - image
+id: taxonomy_term.actors.default
+targetEntityType: taxonomy_term
+bundle: actors
+mode: default
+content:
+  tvdb_author_image:
+    weight: 2
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+  tvdb_role:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  tvdb_serie_id:
+    weight: 3
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  name:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  path: true
+

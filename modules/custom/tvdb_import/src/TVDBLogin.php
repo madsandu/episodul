@@ -22,8 +22,14 @@ class TVDBLogin extends TVDBConnect {
         $url = $this->config->get('api_url') . '/login';
         $credentials = $this->get_credentials();
         $response = $this->curl_post($url, $credentials);
-        $token = $response->token;
-        return $token;
+        if (is_null($response) || empty($response->token)) {
+            drupal_set_message(t('Oops! No response from TVDB'), 'error');
+            return;
+        }
+        else {
+            $token = $response->token;
+            return $token;
+        }
     }
     
     public function get_current_token() {
