@@ -1,5 +1,4 @@
 ## core.entity_form_display.node.episode.default.yml
-
 langcode: en
 status: true
 dependencies:
@@ -12,6 +11,7 @@ dependencies:
     - field.field.node.episode.tvdb_episode_id
     - field.field.node.episode.tvdb_firstaired
     - field.field.node.episode.tvdb_gueststars
+    - field.field.node.episode.tvdb_lastupdated
     - field.field.node.episode.tvdb_serie_id
     - field.field.node.episode.tvdb_writers
     - image.style.thumbnail
@@ -21,6 +21,8 @@ dependencies:
     - image
     - path
     - text
+_core:
+  default_config_hash: Gvr4irTSV-qQZRLBDx-v8wjreUPVnrzO9MRGGsx73GE
 id: node.episode.default
 targetEntityType: node
 bundle: episode
@@ -115,6 +117,12 @@ content:
       size: 40
       placeholder: ''
     third_party_settings: {  }
+  tvdb_lastupdated:
+    type: number
+    weight: 17
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   tvdb_serie_id:
     type: entity_reference_autocomplete
     weight: 7
@@ -139,4 +147,3 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden: {  }
-

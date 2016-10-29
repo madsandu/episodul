@@ -1,0 +1,23 @@
+## field.field.node.episode.tvdb_lastupdated.tvdb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_lastupdated
+    - node.type.episode
+id: node.episode.tvdb_lastupdated
+field_name: tvdb_lastupdated
+entity_type: node
+bundle: episode
+label: 'Last Updated'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
