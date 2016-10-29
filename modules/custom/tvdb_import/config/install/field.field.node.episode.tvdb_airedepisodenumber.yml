@@ -1,0 +1,23 @@
+## field.field.node.episode.tvdb_airedepisodenumber.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_airedepisodenumber
+    - node.type.episode
+id: node.episode.tvdb_airedepisodenumber
+field_name: tvdb_airedepisodenumber
+entity_type: node
+bundle: episode
+label: 'Episode Nr.'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

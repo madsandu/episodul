@@ -1,0 +1,20 @@
+## field.field.node.episode.tvdb_writers.yml
+
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_writers
+    - node.type.episode
+id: node.episode.tvdb_writers
+field_name: tvdb_writers
+entity_type: node
+bundle: episode
+label: Writers
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

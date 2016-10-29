@@ -1,0 +1,26 @@
+## field.field.node.episode.tvdb_serie_id.tvdb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_serie_id
+    - node.type.episode
+id: node.episode.tvdb_serie_id
+field_name: tvdb_serie_id
+entity_type: node
+bundle: episode
+label: 'Serie ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles: {  }
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

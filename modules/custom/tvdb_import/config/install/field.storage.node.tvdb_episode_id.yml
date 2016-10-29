@@ -1,0 +1,23 @@
+## field.storage.node.tvdb_episode_id.yml
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - tvdb_import 
+  module:
+    - node
+id: node.tvdb_episode_id
+field_name: tvdb_episode_id
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

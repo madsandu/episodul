@@ -1,0 +1,23 @@
+## field.field.node.episode.tvdb_firstaired.yml
+
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_firstaired
+    - node.type.episode
+  module:
+    - datetime
+id: node.episode.tvdb_firstaired
+field_name: tvdb_firstaired
+entity_type: node
+bundle: episode
+label: 'First Aired'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
+

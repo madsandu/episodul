@@ -1,0 +1,19 @@
+# field.field.node.episode.tvdb_directors.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_directors
+    - node.type.episode
+id: node.episode.tvdb_directors
+field_name: tvdb_directors
+entity_type: node
+bundle: episode
+label: Directors
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

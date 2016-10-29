@@ -1,0 +1,23 @@
+## field.field.node.episode.tvdb_airedseason.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_airedseason
+    - node.type.episode
+id: node.episode.tvdb_airedseason
+field_name: tvdb_airedseason
+entity_type: node
+bundle: episode
+label: 'Season Nr.'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
