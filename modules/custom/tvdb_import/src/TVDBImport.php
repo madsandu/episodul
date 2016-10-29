@@ -249,7 +249,7 @@ class TVDBImport extends TVDBConnect {
              */
             
             // id
-            $node['field_episode_id'] = $data->id;
+            $node['tvdb_episode_id'] = $data->id;
             // title
             if (isset($data->episodeName) && !empty($data->episodeName)) {
                 $node['title'] = $data->episodeName;
@@ -258,31 +258,31 @@ class TVDBImport extends TVDBConnect {
             if (isset($data->overview) && !empty($data->overview)) {
                 $node['body'] = $data->overview;
             }
-            // body
+            // lastUpdated
             if (isset($data->lastUpdated) && !empty($data->lastUpdated)) {
                 $node['tvdb_lastupdated'] = $data->lastUpdated;
             }
             //seriesId
             if(isset($data->seriesId) && !empty($data->seriesId)) {
-                $node['field_serie_id'] = $this->get_serie_node_id($data->seriesId);
+                $node['tvdb_serie_id'] = $this->get_serie_node_id($data->seriesId);
             }
             // airedSeason, airedEpisodeNumber, firstAired
             $basic_fields = array('airedSeason', 'airedEpisodeNumber', 'firstAired');
             foreach ($basic_fields as $field) {
                 if (isset($data->$field) && !empty($data->$field)) {
-                  $node['field_' . strtolower($field)] = $data->$field;
+                  $node['tvdb_' . strtolower($field)] = $data->$field;
                 }
             }
             //directors, writters, gueststars
             $multiple_fields = array('directors', 'writers', 'guestStars');
             foreach ($multiple_fields as $field) {
                 if (isset($data->$field) && !empty($data->$field)) {
-                  $node['field_' . strtolower($field)] = $this->process_multiple_field_values($data->$field);
+                  $node['tvdb_' . strtolower($field)] = $this->process_multiple_field_values($data->$field);
                 }
             }
             //Cover
             if (isset($data->filename) && !empty($data->filename)) {
-                $node['field_cover'] = $this->process_single_image($data->id, $this->image_url . $data->filename, 'episodes');
+                $node['tvdb_cover'] = $this->process_single_image($data->id, $this->image_url . $data->filename, 'episodes');
             }
             return $node;
         }
