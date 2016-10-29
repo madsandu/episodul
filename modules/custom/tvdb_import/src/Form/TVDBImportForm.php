@@ -76,7 +76,7 @@ class TVDBImportForm extends ConfigFormBase {
       $form['tvdb_import']['actions'] = array('#type' => 'actions');
       $form['actions']['submit'] = array(
         '#type' => 'submit',
-        '#value' => t('Adauga'),
+        '#value' => t('Add serie'),
       );
       return $form;
     }
