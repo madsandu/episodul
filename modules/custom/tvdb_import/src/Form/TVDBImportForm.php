@@ -7,9 +7,8 @@
  
 namespace Drupal\tvdb_import\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Form\ConfigFormBase;
 use Drupal\tvdb_import\TVDBImport;
  
 /**
@@ -17,17 +16,10 @@ use Drupal\tvdb_import\TVDBImport;
  */
 
 
-class TVDBImportForm extends ConfigFormBase {
-    public function __construct(ConfigFactoryInterface $config_factory) {
-      parent::__construct($config_factory);
-    }
+class TVDBImportForm extends FormBase {
 
     public function getFormId() {
       return 'tvdb_import_admin_form';
-    }
-
-    protected function getEditableConfigNames() {
-      return ['config.tvdb_import'];
     }
 
     public function buildForm(array $form, FormStateInterface $form_state) {
@@ -77,6 +69,7 @@ class TVDBImportForm extends ConfigFormBase {
       $form['actions']['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Add serie'),
+        '#button_type' => 'primary',
       );
       return $form;
     }
@@ -94,6 +87,5 @@ class TVDBImportForm extends ConfigFormBase {
         $TVDB = new TVDBImport;
         $TVDB->add_serie($id, $custom_fields);
         
-        parent::submitForm($form, $form_state);
     }
 }
