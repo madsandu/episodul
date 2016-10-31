@@ -1,0 +1,21 @@
+# field.storage.node.tvdb_aliases.yml
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.tvdb_aliases
+field_name: tvdb_aliases
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -20,4 +20,4 @@ tvdb_import.import_form:
     _title: 'TVDB Import'
     _form: 'Drupal\tvdb_import\Form\TVDBImportForm'
   requirements:
-    _permission: 'administer tvdb_import settings'
+    _permission: 'access content'

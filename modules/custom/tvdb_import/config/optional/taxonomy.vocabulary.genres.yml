@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - tvdb_import
+name: Genres
+vid: genres
+description: 'Genuri seriale'
+hierarchy: 0
+weight: 0
