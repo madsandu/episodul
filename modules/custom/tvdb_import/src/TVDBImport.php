@@ -57,16 +57,33 @@ class TVDBImport extends TVDBConnect {
       $context['sandbox']['max'] = 100;
     }
     
-    $result = $this->process_serie($id, $custom_fields, $context);
+    $context = $this->process_serie($id, $custom_fields, $context);
     
     //If all processes ended, create the node
-    if (isset($result['details']) && !empty($result['details'])) {
-      $details = $result['details'];
-      if (!empty($details)) {
-        $node = entity_create('node', $details);
-        $node->save();
+    if ($context['sandbox']['progress'] == $context['sandbox']['max']) {
+      //get the node
+      $details = $context['sandbox']['node'];
+      
+      // set up results for creating finish message
+      if (isset($details['title']) && !empty($details['title'])) {
         $context['results']['serie'] = $details['title'];
       }
+      if (isset($details['tvdb_genre']) && !empty($details['tvdb_genre'])) {
+        $context['results']['genres'] = count($details['tvdb_genre']);
+      }
+      if (isset($details['tvdb_actors']) && !empty($details['tvdb_actors'])) {
+        $context['results']['actors'] = count($details['tvdb_actors']);
+      }
+      if (isset($details['tvdb_posters']) && !empty($details['tvdb_posters'])) {
+        $context['results']['posters'] = count($details['tvdb_posters']);
+      }
+      if (isset($details['tvdb_fanart']) && !empty($details['tvdb_fanart'])) {
+        $context['results']['fanart'] = count($details['tvdb_fanart']);
+      }
+
+      // save node 
+      $node = entity_create('node', $details);
+      $node->save();
     }
     
     // get progress
@@ -88,20 +105,26 @@ class TVDBImport extends TVDBConnect {
     $batch = range($context['sandbox']['progress'], $context['sandbox']['progress'] + 4);
     
     foreach ($batch as $value) {
+      //get episode details
       $episode = $this->get_episode($data[$value]);
+      
       if(isset($episode) && !empty($episode)) {
+        // process the episde
         $details = $this->process_episode($episode->data, $id);
         if (!empty($details)) {
-          $context['sandbox']['progress']++;
+          //save episode
           $node = entity_create('node', $details);
+          $node->save();
+          // increase progress
+          $context['sandbox']['progress']++;
           $context['results']['episodes'][] = $value;
         }
       }
     }
-    //set progress message
+    //set batch progress message
     $context['message'] = t('Added @count episodes', array('@count' => $context['sandbox']['progress']));
     
-    //end batch
+    //end current batch
     if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
       $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
     }
@@ -109,7 +132,7 @@ class TVDBImport extends TVDBConnect {
 
   public function add_actors($id) {
     $data = $this->get_actors($id)->data;
-    if (isset($data) && !empty($data) && !is_null($data)) {
+    if (isset($data) && !empty($data) && !is_nul($data)) {
       usort($data, function($a, $b) {
         return $a->sortOrder - $b->sortOrder;
       });
@@ -121,7 +144,7 @@ class TVDBImport extends TVDBConnect {
       return $actors;
     }
     else {
-      return '';
+      return FALSE;
     }
   }
 
@@ -161,163 +184,144 @@ class TVDBImport extends TVDBConnect {
     // check if correct ID
     if (isset($data->id) && !empty($data->id)) {
       
+      // get images
+      $images_poster = $this->get_images($id, 'poster')->data;
+      $images_fanart = $this->get_images($id, 'fanart')->data;
+      
       // STEP 1 - Start importing serie, 10% progress
-      if (isset($context['sandbox']['progress']) && $context['sandbox']['progress'] == 0) {
+      if ($context['sandbox']['progress'] == 0) {
         $context['sandbox']['progress'] = 10;
         $context['message'] = t('Started importing "@serie"', array('@serie' => $data->seriesName));
-        $images_fanart = $this->get_images($id, 'fanart')->data;
-        $images_poster = $this->get_images($id, 'poster')->data;
-
-        $node = array(
+ 
+        $context['sandbox']['node'] = array(
           'type' => 'serie', 
           'uid' => 1,
           'status' => 1,
         );
 
-        /*
-         * Map Values
-         */
-
         // id
-        $node['tvdb_id'] = $data->id;
+        $context['sandbox']['node']['tvdb_id'] = $data->id;
         // title
         if (isset($data->seriesName) && !empty($data->seriesName)) {
-          $node['title'] = $data->seriesName;
+          $context['sandbox']['node']['title'] = $data->seriesName;
         }
         // body
         if (isset($data->overview) && !empty($data->overview)) {
-          $node['body'] = $data->overview;
+          $context['sandbox']['node']['body'] = $data->overview;
         }
         // network, runtime, airsDayOfWeek, airsTime, rating, imdbId, lastUpdated, firstAired
         $basic_fields = array('network', 'runtime', 'airsDayOfWeek', 'airsTime', 'rating', 'imdbId', 'lastUpdated', 'firstAired');
         foreach ($basic_fields as $field) {
           if (isset($data->$field) && !empty($data->$field)) {
-            $node['tvdb_' . strtolower($field)] = $data->$field;
+            $context['sandbox']['node']['tvdb_' . strtolower($field)] = $data->$field;
           }
         }
         //status 
         if (isset($data->status) && !empty($data->status)) {
           if($data->status == "Continuing") {
-            $node['tvdb_status'] = 1;
+            $context['sandbox']['node']['tvdb_status'] = 1;
           }
           else {
-            $node['tvdb_status'] = 0;
+            $context['sandbox']['node']['tvdb_status'] = 0;
           }
         }
         //aliases
         if (isset($data->aliases) && !empty($data->aliases)) {
-          $node['tvdb_aliases'] = $this->process_multiple_field_values($data->aliases);
+          $context['sandbox']['node']['tvdb_aliases'] = $this->process_multiple_field_values($data->aliases);
         }
         
         //RO title, RO description
         if (!empty($custom_fields['title_ro'])) {
-          $node['tvdb_title_ro'] = $custom_fields['title_ro'];
+          $context['sandbox']['node']['tvdb_title_ro'] = $custom_fields['title_ro'];
         }
         if (!empty($custom_fields['description_ro'])) {
-          $node['tvdb_body_ro'] = $custom_fields['description_ro'];
+          $context['sandbox']['node']['tvdb_body_ro'] = $custom_fields['description_ro'];
         }
         
         //Main Poster
         if (!empty($custom_fields['poster'])) {
-          $node['tvdb_poster'] = $this->process_single_image($data->seriesName, $custom_fields['poster'], 'poster');
+          $context['sandbox']['node']['tvdb_poster'] = $this->process_single_image($data->seriesName, $custom_fields['poster'], 'poster');
         } 
         elseif(!empty($images_poster)) {
-          $node['tvdb_poster'] = $this->process_single_image($data->seriesName, $this->image_url . $images_poster[0]->fileName, 'poster');
+          $context['sandbox']['node']['tvdb_poster'] = $this->process_single_image($data->seriesName, $this->image_url . $images_poster[0]->fileName, 'poster');
         }
         
         //Main Background
         if (!empty($custom_fields['background'])) {
-          $node['tvdb_background'] = $this->process_single_image($data->seriesName, $custom_fields['background'], 'fanart');
+          $context['sandbox']['node']['tvdb_background'] = $this->process_single_image($data->seriesName, $custom_fields['background'], 'fanart');
         } 
         elseif (!empty($images_fanart)) {
-          $node['tvdb_background'] = $this->process_single_image($data->seriesName, $this->image_url . $images_fanart[0]->fileName, 'fanart');
+          $context['sandbox']['node']['tvdb_background'] = $this->process_single_image($data->seriesName, $this->image_url . $images_fanart[0]->fileName, 'fanart');
         }
         
         //end batch
-        if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-          $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
-        }
-        return array(
-          'context' => $context,
-        );
+        $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+        return $context;
       }
       
       // STEP 2 - Start adding genres, 30% progress
-      if (isset($context['sandbox']['progress']) && $context['sandbox']['progress'] == 10) {
+      if ($context['sandbox']['progress'] == 10) {
+        $context['sandbox']['progress'] = 30;
+        $context['message'] = t('Added @count genres.', array('@count' => count($data->genre)));
         if (isset($data->genre) && !empty($data->genre)) {
-          
-          $node['tvdb_genre'] = $this->process_multiple_taxonomy_terms($data->genre, 'genres');
-          $context['sandbox']['progress'] = 30;
-          $context['message'] = t('Added @count genres.', array('@count' => count($data->genre)));
+          $context['sandbox']['node']['tvdb_genre'] = $this->process_multiple_taxonomy_terms($data->genre, 'genres');
         }
+        
         //end batch
-        if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-          $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
-        }
-        return array(
-          'context' => $context,
-        );
+        $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+        return $context;
       }
       
       // STEP 3 - Start adding actors, 50% progress
-      if (isset($context['sandbox']['progress']) && $context['sandbox']['progress'] == 30) {
+      if ($context['sandbox']['progress'] == 30) {
           $actors = $this->add_actors($id);
           
           $context['sandbox']['progress'] = 50;
           $context['message'] = t('Added @count actors.', array('@count' => count($actors)));
           
-          if (isset($actors) && !empty($actors)) {
-            $node['tvdb_actors'] = $this->process_multiple_taxonomy_terms($actors, 'actors');
+          if (isset($actors) && !empty($actors) && $actors !== FALSE) {
+            $context['sandbox']['node']['tvdb_actors'] = $this->process_multiple_taxonomy_terms($actors, 'actors');
           }
+          
           //end batch
-          if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-            $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
-          }
-          return array(
-            'context' => $context,
-          );
+          $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+          return $context;
       }
       
       // STEP 4 - Start adding fanart, 75% progress
-      if (isset($context['sandbox']['progress']) && $context['sandbox']['progress'] == 50) {
+      if ($context['sandbox']['progress'] == 50) {
         $context['sandbox']['progress'] = 75;
         $context['message'] = t('Added @count fanart.', array('@count' => count($images_fanart)));
+            
         
-//        if (!empty($images_fanart)) {
-//          $node['tvdb_fanart'] = $this->process_multiple_images($images_fanart, $data);
-//        }
-        sleep(1);
-        //end batch
-        if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-          $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+        if (!empty($images_fanart)) {
+          $context['sandbox']['node']['tvdb_fanart'] = $this->process_multiple_images($images_fanart, $data);
         }
-        return array(
-          'context' => $context,
-        );
-      }
-      
-      // STEP 5 - Start adding posters, 100% progress
-      if (isset($context['sandbox']['progress']) && $context['sandbox']['progress'] == 75) {
-        $node['tvdb_posters'] = $this->process_multiple_images($images_poster, $data);
-        $context['sandbox']['progress'] = 100;
-//        if (!empty($images_poster)) {
-//          $context['message'] = t('Added @count posters.', array('@count' => count($images_poster)));
-//        }
-        sleep(1);
         
+        //end batch
+        $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+        return $context;
       }
       
-      // Finish batch
-      if (isset($context['sandbox']['progress']) && $context['sandbox']['progress'] == $context['sandbox']['max']) {
-        return array(
-          'details' => $node,
-          'context' => $context,
-        );
+      // STEP 5 - Start adding posters, 99% progress
+      if ($context['sandbox']['progress'] == 75) {
+        $context['sandbox']['progress'] = 99;
+        $context['message'] = t('Added @count posters.', array('@count' => count($images_poster)));
+        
+        if (!empty($images_poster)) {
+          $context['sandbox']['node']['tvdb_posters'] = $this->process_multiple_images($images_poster, $data);
+        }
+        
+        //end batch
+        $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+        return $context;
       }
-      else {
-        return array(
-          'context' => $context,
-        );
+      
+      // Finish serie import
+      if ($context['sandbox']['progress'] == 99) {
+        $context['sandbox']['progress'] = 100;
+        $context['message'] = t('Creating node...');
+        return $context;
       }
     }
   }
@@ -389,7 +393,6 @@ class TVDBImport extends TVDBConnect {
   private function process_actor($actor) {
     if (isset($actor->id) && !empty($actor->id)) {
       if (taxonomy_term_load($actor->id)) {
-        drupal_set_message(t('Actor "@name" already exists', array('@name' => $actor->name)), 'warning');
         return FALSE;
       }
       $taxonomy = array(
@@ -411,7 +414,6 @@ class TVDBImport extends TVDBConnect {
       $term =  Term::create($taxonomy)->save();
     }
     else {
-      drupal_set_message(t('Could not create actor "@name"', array('@name' => $data->name)), 'warning');
       return FALSE;
     }
   }
@@ -466,7 +468,6 @@ class TVDBImport extends TVDBConnect {
           break;
       }
     }
-    drupal_set_message(t('Added @number @type', array('@number' => $count, '@type' => $type)), 'status');
     return $node;
   }
 

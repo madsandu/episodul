@@ -148,10 +148,11 @@ class TVDBImportForm extends FormBase {
         'finished' => 'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_end',
         'file' => drupal_get_path('module', 'tvdb_import') . '/src/TVDBImport',
       );
-//      $TVDB = new TVDBImport;
-//      $TVDB->add_serie($id, $custom_fields, '');
       //start import
       batch_set($batch);
+      
+      //$TVDB = new TVDBImport;
+      //$TVDB->add_actors($id);
   }
 
   /*
@@ -175,10 +176,35 @@ class TVDBImportForm extends FormBase {
    */
   public static function form_progress_end($success, $results, $operations) {
     if ($success) {
-      $message = \Drupal::translation()->formatPlural(
-        count($results['episodes']),
-        'Added one episode.', 'Added @count episodes.'
-      );
+      if (isset($results['serie']) && !empty($results['serie'])) {
+        $message = t('Successfully added "@serie": ', array('@serie' => $results['serie']));
+        $message .= '(';
+        if (isset($results['episodes']) && !empty($results['episodes'])) {
+          $message .= \Drupal::translation()->formatPlural(
+            count($results['episodes']),
+            '1 episode, ', '@count episodes, '
+          );
+        }
+        if (isset($results['genres']) && !empty($results['genres'])) {
+          $message .= \Drupal::translation()->formatPlural(
+            count($results['genres']),
+            '1 genre, ', '@count genres, '
+          );
+        }
+        if (isset($results['posters']) && !empty($results['posters'])) {
+          $message .= \Drupal::translation()->formatPlural(
+            count($results['posters']),
+            '1 poster, ', '@count posters, '
+          );
+        }
+        if (isset($results['fanart']) && !empty($results['fanart'])) {
+          $message .= \Drupal::translation()->formatPlural(
+            count($results['fanart']),
+            '1 fanart.', '@count fanart.'
+          );
+        }
+        $message .= ')';
+      }
     }
     else {
       $message = t('Finished with an error.');

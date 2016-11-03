@@ -1,13 +1,14 @@
 <div id="page">
     {% if content.tvdb_background %}
+        TEST 2
         <div id="background">
             {{ content.tvdb_background }}
-            {%if content.title%}
+            {%if content.title %}
                 <div id="serie_title">
                     {{content.title}}
                 </div>
             {%endif%}
-            {%if content.tvdb_title_ro%}
+            {%if content.tvdb_title_ro %}
                 <div id="serie_title">
                     {{content.tvdb_title_ro}}
                 </div>
@@ -53,7 +54,7 @@
                         {{ content.tvdb_aliases }}
                     </div>
                 {% endif %}
-                <span>{%trans%}Description{%endtrans%}</span>
+                <span>{%trans%}Description {%endtrans%}</span>
                 {% if content.body %}
                     <div id="overview" class="col-md-8 col-sm-6 col-xs-12">
                         {{ content.body}}
