@@ -38,7 +38,7 @@ class TVDBStatusForm extends ConfigFormBase {
     // Get current token
     $token = $this->TVDB->get_current_token();
 
-    // Check the current status
+    // Get current status
     if($this->TVDB->check_status()) {
       $status = 'Connected';
     } 
@@ -46,7 +46,7 @@ class TVDBStatusForm extends ConfigFormBase {
       $status = 'Offline';
     }
 
-    // create form
+    // Create form
     $form['tvdb_status'] = array(
       'status' => array(
         '#type' => 'textfield',

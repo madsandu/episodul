@@ -36,11 +36,11 @@ class TVDBImportForm extends FormBase {
     $form['tvdb_import']['custom'] = array(
       '#type' => 'details',
       '#title' => t('Custom'),
-      '#description' => strtoupper(t('Add Romanian translations and custom images if available.')),
+      '#description' => strtoupper(t('Romanian translations and custom images.')),
       '#open' => FALSE,
         'title_ro' => array(
           '#type' => 'textfield',
-          '#description' => t('Add romanian title if available.'),
+          '#description' => t('Add Romanian title if available.'),
           '#title' => t('RO Title'),
           '#maxlength' => 255,
           '#required' => FALSE
@@ -49,27 +49,27 @@ class TVDBImportForm extends FormBase {
           '#type' => 'textarea',
           '#rows' => 10,
           '#title' => t('RO Description'),
-          '#description' => t('Add romanian description if available.'),
+          '#description' => t('Add Romanian description if available.'),
           '#maxlength' => 1020,
           '#required' => FALSE
         ),
         'serie_poster' => array(
           '#type' => 'url',
-          '#description' => 'Add link to a custom image. Poster will be auto-imported from TVDB if left empty',
-          '#title' => t('Serie Custom Poster Image'),
+          '#description' => '<p><strong>' . t('Allowed formats: JPG, JPEG, PNG, GIF.') . '</strong></p><p><i>' . t('Poster will be auto-imported from TVDB if left empty.') . '</i></p>',
+          '#title' => t('Poster Image'),
           '#maxlength' => 1020,
           '#required' => FALSE
         ),
         'serie_background' => array(
           '#type' => 'url',
-          '#description' => 'Add link to a custom image for a series. Background image will be auto-imported from TVDB if left empty',
-          '#title' => t('Serie Custom background Image'),
+          '#description' => '<p><strong>' . t('Allowed formats: JPG, JPEG, PNG, GIF.') . '</strong></p><p><i>' . t('Background will be auto-imported from TVDB if left empty.') . '</i></p>',
+          '#title' => t('Background Image'),
           '#maxlength' => 1020,
           '#required' => FALSE
         ),
     );
 
-    // Submit Handler
+    // Add submit Handler
     $form['tvdb_import']['actions'] = array('#type' => 'actions');
     $form['tvdb_import']['actions']['submit'] = array(
       '#type' => 'submit',
@@ -94,15 +94,16 @@ class TVDBImportForm extends FormBase {
     if (is_null($response) || empty($response)) {
       $form_state->setErrorByName('serie_id', $this->t('TVDB Error: Could not get a response'));
     }
-
     //check for errors
-    if (isset($response->Error) && !empty($response->Error)) {
+    else if (isset($response->Error) && !empty($response->Error)) {
       $form_state->setErrorByName('serie_id', t('TVDB Error: ') . $response->Error);
     }
-
     //check if serie already exists
-    if ($TVDB->check_existing_serie($id) != 0) {
-      $form_state->setErrorByName('serie_id', $this->t('"@title" already exists', array('@title' => $data->seriesName)));
+    else if ($TVDB->check_existing_serie($id) != 0) {
+      //$form_state->setErrorByName('serie_id', $this->t('"@title" already exists', array('@title' => $data->seriesName)));
+    }
+    else {
+      $form_state->setValue('data', $data);
     }
 
     //check if poster and background are valid images
@@ -118,7 +119,8 @@ class TVDBImportForm extends FormBase {
 
       // get serie id
       $id = $form_state->getValue('serie_id');
-
+      $data = $form_state->getValue('data');
+      
       //get custom fields
       $custom_fields = array (
           'title_ro' => $form_state->getValue('title_ro'),
@@ -126,25 +128,67 @@ class TVDBImportForm extends FormBase {
           'poster' => $form_state->getValue('serie_poster'),
           'background' => $form_state->getValue('serie_background'),
       );
-      echo 'made it';
-//        $TVDB = new TVDBImport;
-
-//        $batch = array(
-//            'title' => t('Importing serie...'),
-//            'operations' => array(
-//                array(
-//                  '\Drupal\tvdb_import\TVDBImport::add_serie',
-//                  array($id, $custom_fields)
-//                ),
-//            ),
-//            'finished' => '\Drupal\tvdb_import\TVDBImport::importSerieFinishedCallback',
-//        );
-//        
-//        batch_set($batch);
-//        $TVDB->add_serie($id, $custom_fields);
+      
+      //setting up batch
+      $batch = array(
+        'title' => t('Importing @serie', array('@serie' => $data->seriesName)),
+        'operations' => array(
+          array(
+            'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_add_serie',
+              array($id, $custom_fields)
+          ),
+          array(
+            'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_add_episodes',
+            array($id)
+          )
+        ),
+        'init_message' => t('Getting ready...'),
+        'progress_message' => t('Operation @current out of @total.'),
+        'error_message' => t('TVDB Import has encountered an error.'),
+        'finished' => 'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_end',
+        'file' => drupal_get_path('module', 'tvdb_import') . '/src/TVDBImport',
+      );
+//      $TVDB = new TVDBImport;
+//      $TVDB->add_serie($id, $custom_fields, '');
+      //start import
+      batch_set($batch);
   }
 
-  // Check if the url in custom fields is an image
+  /*
+   *  operation to add serie
+   */
+  public static function form_progress_add_serie($id, $custom_fields, &$context) {
+    $TVDB = new TVDBImport;
+    $TVDB->add_serie($id, $custom_fields, $context);
+  }
+  
+  /*
+   *  operation to add episodes
+   */
+  public static function form_progress_add_episodes($id, &$context) {
+    $TVDB = new TVDBImport;
+    $TVDB->add_episodes($id, $context);
+  }
+  
+  /*
+   *  end batch process and set messages
+   */
+  public static function form_progress_end($success, $results, $operations) {
+    if ($success) {
+      $message = \Drupal::translation()->formatPlural(
+        count($results['episodes']),
+        'Added one episode.', 'Added @count episodes.'
+      );
+    }
+    else {
+      $message = t('Finished with an error.');
+    }
+    drupal_set_message($message);
+  }
+
+  /*
+   *  Check if the url in custom fields is an image
+   */
   private function is_image($url) {
     $url_headers=get_headers($url, 1);
     if(isset($url_headers['Content-Type'])){

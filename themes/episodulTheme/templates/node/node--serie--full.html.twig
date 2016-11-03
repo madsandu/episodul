@@ -1,0 +1,70 @@
+<div id="page">
+    {% if content.tvdb_background %}
+        <div id="background">
+            {{ content.tvdb_background }}
+            {%if content.title%}
+                <div id="serie_title">
+                    {{content.title}}
+                </div>
+            {%endif%}
+            {%if content.tvdb_title_ro%}
+                <div id="serie_title">
+                    {{content.tvdb_title_ro}}
+                </div>
+            {%endif%}
+            {%if tvdb_airsdayofweek%}
+                <div id="air_time">
+                    {{tvdb_airsdayofweek}}
+                </div>
+            {%endif%}
+            {%if tvdb_airstime%}
+                <div id="air_time">
+                    {{tvdb_airstime}}
+                </div>
+            {%endif%}
+            {%if tvdb_status%}
+                <div id="air_time">
+                    {{tvdb_status}}
+                </div>
+            {%endif%}
+            {%if tvdb_network%}
+                <div id="network">
+                    {{tvdb_network}}
+                </div>
+            {%endif%}
+            {%if tvdb_genre%}
+                <div id="genre">
+                    {{tvdb_genre}}
+                </div>
+            {%endif%}
+            {%if tvdb_rating%}
+                <div id="genre">
+                    {{tvdb_rating}}
+                </div>
+            {%endif%}
+        </div>
+    {% endif %}
+    <section id ="main">
+        <div id="container">
+            <div id="row">
+                <span class="label">{%trans%}A.K.A.{%endtrans%}</span>
+                {% if content.tvdb_aliases %}
+                    <div id="aliases" class="col-md-8 col-sm-6 col-xs-12">
+                        {{ content.tvdb_aliases }}
+                    </div>
+                {% endif %}
+                <span>{%trans%}Description{%endtrans%}</span>
+                {% if content.body %}
+                    <div id="overview" class="col-md-8 col-sm-6 col-xs-12">
+                        {{ content.body}}
+                    </div>
+                {% endif %}
+                {% if content.tvdb_body_ro %}
+                    <div id="overview" class="col-md-8 col-sm-6 col-xs-12">
+                        {{ content.tvdb_body_ro}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>

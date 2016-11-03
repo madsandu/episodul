@@ -27,8 +27,12 @@ class TVDBSettingsForm extends ConfigFormBase {
     return ['config.tvdb_settings'];
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state) {      
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    
+    //Get current config
     $config = $this->config('config.tvdb_settings');
+    
+    //Set API URL 
     $form['tvdb_settings']['api_url'] = array(
       '#type' => 'textfield',
       '#title' => t('TVDB API URL'),
@@ -36,6 +40,8 @@ class TVDBSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
       '#default_value' => $config->get('api_url')
     );
+    
+    //Set Credentials 
     $form['tvdb_settings']['credentials'] = array(
       '#type' => 'details',
       '#title' => t('Credentials'),
