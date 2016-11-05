@@ -48,7 +48,7 @@ class TVDBLogin extends TVDBConnect {
     $url = $this->config->get('api_url') . '/series/' . $id;
     $token = $this->get_current_token();
     $response = $this->curl_get($url, $token);
-    if(!empty($response)) {
+    if(isset($response->data) && !empty($response->data)) {
       return TRUE;
     }
     else {

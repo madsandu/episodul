@@ -27,7 +27,7 @@ class TVDBImport extends TVDBConnect {
     return $response;
   }
 
-  private function get_serie_episodes($id) {
+  public function get_serie_episodes($id) {
     $url = $this->url . '/series/' . $id . '/episodes';
     $response = $this->curl_get($url, $this->token);
     $episodes = array();
@@ -49,15 +49,9 @@ class TVDBImport extends TVDBConnect {
     return $response;
   }
 
-  public function add_serie($id, $custom_fields, $context) {
-    
-    // set up progress
-    if (empty($context['sandbox'])) {
-      $context['sandbox']['progress'] = 0;
-      $context['sandbox']['max'] = 100;
-    }
-    
-    $context = $this->process_serie($id, $custom_fields, $context);
+  public function add_serie($id, $data, $custom_fields, $context) {
+
+    $context = $this->process_serie($id, $data, $custom_fields, $context);
     
     //If all processes ended, create the node
     if ($context['sandbox']['progress'] == $context['sandbox']['max']) {
@@ -86,28 +80,16 @@ class TVDBImport extends TVDBConnect {
       $node->save();
     }
     
-    // get progress
-    if (isset($result['context']) && !empty($result['context'])) {
-      $context = $result['context'];
-    }
+    return $context;
   }
 
-  public function add_episodes($id, $context) {
-    $data = $this->get_serie_episodes($id);
+  public function add_episodes($id, $data, $context) {
     
-    //adding context variables
-    if (empty($context['sandbox'])) {
-      $context['sandbox']['progress'] = 0;
-      $context['sandbox']['max'] = count($data);
-    }
-    
-    //create batches of 5 episodes
+    //create batches of 5
     $batch = range($context['sandbox']['progress'], $context['sandbox']['progress'] + 4);
-    
     foreach ($batch as $value) {
       //get episode details
       $episode = $this->get_episode($data[$value]);
-      
       if(isset($episode) && !empty($episode)) {
         // process the episde
         $details = $this->process_episode($episode->data, $id);
@@ -115,24 +97,18 @@ class TVDBImport extends TVDBConnect {
           //save episode
           $node = entity_create('node', $details);
           $node->save();
-          // increase progress
-          $context['sandbox']['progress']++;
-          $context['results']['episodes'][] = $value;
         }
       }
+      // increase progress    
+      $context['sandbox']['progress']++;
     }
-    //set batch progress message
-    $context['message'] = t('Added @count episodes', array('@count' => $context['sandbox']['progress']));
     
-    //end current batch
-    if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-      $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
-    }
+    return $context;
   }
 
   public function add_actors($id) {
     $data = $this->get_actors($id)->data;
-    if (isset($data) && !empty($data) && !is_nul($data)) {
+    if (isset($data) && !empty($data)) {
       usort($data, function($a, $b) {
         return $a->sortOrder - $b->sortOrder;
       });
@@ -144,7 +120,7 @@ class TVDBImport extends TVDBConnect {
       return $actors;
     }
     else {
-      return FALSE;
+      return '';
     }
   }
 
@@ -160,14 +136,22 @@ class TVDBImport extends TVDBConnect {
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'serie', '=')
       ->condition('tvdb_id', $id, '=');
-    return $query->count()->execute();
+    $count = $query->count()->execute();
+    if ($count > 0) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
-  private function check_existing_episode($id) {
+  public function check_existing_episode($id) {
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'episode', '=')
-      ->condition('nid', $id, '=');
-    return $query->count()->execute();
+      ->condition('tvdb_episode_id', $id, '=');
+    $count = $query->count()->execute();
+    if ($count > 0) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   public function get_serie_node_id($id) {
@@ -177,9 +161,7 @@ class TVDBImport extends TVDBConnect {
     return $query->execute();
   }
 
-  private function process_serie($id, $custom_fields, $context) {
-    // get data
-    $data = $this->get_serie($id)->data;
+  private function process_serie($id, $data, $custom_fields, $context) {
     
     // check if correct ID
     if (isset($data->id) && !empty($data->id)) {
@@ -191,7 +173,7 @@ class TVDBImport extends TVDBConnect {
       // STEP 1 - Start importing serie, 10% progress
       if ($context['sandbox']['progress'] == 0) {
         $context['sandbox']['progress'] = 10;
-        $context['message'] = t('Started importing "@serie"', array('@serie' => $data->seriesName));
+        $context['message'] = t('Adding details...');
  
         $context['sandbox']['node'] = array(
           'type' => 'serie', 
@@ -262,7 +244,7 @@ class TVDBImport extends TVDBConnect {
       // STEP 2 - Start adding genres, 30% progress
       if ($context['sandbox']['progress'] == 10) {
         $context['sandbox']['progress'] = 30;
-        $context['message'] = t('Added @count genres.', array('@count' => count($data->genre)));
+        $context['message'] = t('Adding genres...');
         if (isset($data->genre) && !empty($data->genre)) {
           $context['sandbox']['node']['tvdb_genre'] = $this->process_multiple_taxonomy_terms($data->genre, 'genres');
         }
@@ -277,9 +259,9 @@ class TVDBImport extends TVDBConnect {
           $actors = $this->add_actors($id);
           
           $context['sandbox']['progress'] = 50;
-          $context['message'] = t('Added @count actors.', array('@count' => count($actors)));
+          $context['message'] = t('Adding actors...');
           
-          if (isset($actors) && !empty($actors) && $actors !== FALSE) {
+          if (isset($actors) && !empty($actors)) {
             $context['sandbox']['node']['tvdb_actors'] = $this->process_multiple_taxonomy_terms($actors, 'actors');
           }
           
@@ -291,7 +273,7 @@ class TVDBImport extends TVDBConnect {
       // STEP 4 - Start adding fanart, 75% progress
       if ($context['sandbox']['progress'] == 50) {
         $context['sandbox']['progress'] = 75;
-        $context['message'] = t('Added @count fanart.', array('@count' => count($images_fanart)));
+        $context['message'] = t('Adding fanart...');
             
         
         if (!empty($images_fanart)) {
@@ -306,7 +288,7 @@ class TVDBImport extends TVDBConnect {
       // STEP 5 - Start adding posters, 99% progress
       if ($context['sandbox']['progress'] == 75) {
         $context['sandbox']['progress'] = 99;
-        $context['message'] = t('Added @count posters.', array('@count' => count($images_poster)));
+        $context['message'] = t('Adding posters...');
         
         if (!empty($images_poster)) {
           $context['sandbox']['node']['tvdb_posters'] = $this->process_multiple_images($images_poster, $data);
@@ -328,15 +310,10 @@ class TVDBImport extends TVDBConnect {
 
   private function process_episode($data, $id) {
     if (isset($data->id) && !empty($data->id)) {
-      if ($this->check_existing_episode($data->id) != 0) {
-        drupal_set_message(t('Episode "@title" already exists', array('@title' => $data->episodeName)), 'error');
-        return;
+      if ($this->check_existing_episode($data->id) || !$this->check_existing_serie($data->seriesId)) {
+        return '';
       }
-
-      if(!empty($data->seriesId) && $this->check_existing_serie($data->seriesId) == 0) {
-        drupal_set_message(t('Can\'t find parent serie for episode "@title"', array('@title' => $data->episodeName)), 'error');
-        return;
-      }
+      
       $node = array(
         'type' => 'episode', 
         'uid' => 1,
@@ -450,7 +427,6 @@ class TVDBImport extends TVDBConnect {
 
   public function process_multiple_taxonomy_terms($taxonomies, $type) {
     $node = array();
-    $count = 0;
     foreach ($taxonomies as $value) {
       switch($type) {
         case 'genres':
@@ -458,13 +434,11 @@ class TVDBImport extends TVDBConnect {
           if (is_null($genre) || empty($genre)) {
             $this->add_genre($value);
             $genre = array_keys(taxonomy_term_load_multiple_by_name($value, $type));
-            $count++;
           }
           $node[] = $genre[0];
           break;
         case 'actors':
           $node[] = $value;
-          $count++;
           break;
       }
     }
@@ -485,7 +459,7 @@ class TVDBImport extends TVDBConnect {
       }
     }
     else {
-      drupal_set_message(t('Could not save image from @path', array('@path' => $path)), 'error');
+      return array();
     }
   }
 }

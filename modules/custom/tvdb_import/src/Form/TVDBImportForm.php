@@ -17,6 +17,10 @@ use Drupal\tvdb_import\TVDBImport;
 
 
 class TVDBImportForm extends FormBase {
+  
+  public function __construct() {
+    $this->TVDB = new TVDBImport;
+  }
 
   public function getFormId() {
     return 'tvdb_import_admin_form';
@@ -81,15 +85,14 @@ class TVDBImportForm extends FormBase {
   }
 
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    $TVDB = new TVDBImport;
 
     $id = $form_state->getValue('serie_id');
     $poster = $form_state->getValue('serie_poster');
     $background = $form_state->getValue('serie_background');
 
-    $response = $TVDB->get_serie($id);
+    $response = $this->TVDB->get_serie($id);
     $data = $response->data;
-
+    
     //check if there is a response
     if (is_null($response) || empty($response)) {
       $form_state->setErrorByName('serie_id', $this->t('TVDB Error: Could not get a response'));
@@ -99,13 +102,13 @@ class TVDBImportForm extends FormBase {
       $form_state->setErrorByName('serie_id', t('TVDB Error: ') . $response->Error);
     }
     //check if serie already exists
-    else if ($TVDB->check_existing_serie($id) != 0) {
+    //else if ($TVDB->check_existing_serie($id)) {
       //$form_state->setErrorByName('serie_id', $this->t('"@title" already exists', array('@title' => $data->seriesName)));
-    }
+    //}
     else {
       $form_state->setValue('data', $data);
     }
-
+    
     //check if poster and background are valid images
     if (isset($poster) && !empty($poster) &&  !$this->is_image($poster)) {
       $form_state->setErrorByName('serie_poster', t('Poster is not an valid image'));
@@ -117,9 +120,10 @@ class TVDBImportForm extends FormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-      // get serie id
+      //get data
       $id = $form_state->getValue('serie_id');
       $data = $form_state->getValue('data');
+      $episodes = $this->TVDB->get_serie_episodes($id);
       
       //get custom fields
       $custom_fields = array (
@@ -133,83 +137,89 @@ class TVDBImportForm extends FormBase {
       $batch = array(
         'title' => t('Importing @serie', array('@serie' => $data->seriesName)),
         'operations' => array(
-          array(
-            'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_add_serie',
-              array($id, $custom_fields)
-          ),
-          array(
-            'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_add_episodes',
-            array($id)
-          )
+          array('Drupal\tvdb_import\Form\TVDBImportForm::form_progress_add_serie', array($id, $data, $custom_fields)),
+          array('Drupal\tvdb_import\Form\TVDBImportForm::form_progress_add_episodes', array($id, $episodes))
         ),
         'init_message' => t('Getting ready...'),
-        'progress_message' => t('Operation @current out of @total.'),
+        'progress_message' => t('Importing "@serie".', array('@serie' => $data->seriesName)),
         'error_message' => t('TVDB Import has encountered an error.'),
         'finished' => 'Drupal\tvdb_import\Form\TVDBImportForm::form_progress_end',
-        'file' => drupal_get_path('module', 'tvdb_import') . '/src/TVDBImport',
       );
       //start import
       batch_set($batch);
-      
-      //$TVDB = new TVDBImport;
-      //$TVDB->add_actors($id);
   }
 
   /*
    *  operation to add serie
    */
-  public static function form_progress_add_serie($id, $custom_fields, &$context) {
+  public static function form_progress_add_serie($id, $data, $custom_fields, &$context) {
+    
+    // set up progress
+    if (empty($context['sandbox'])) {
+      $context['sandbox']['progress'] = 0;
+      $context['sandbox']['max'] = 100;
+    }
+    
+    // start import
     $TVDB = new TVDBImport;
-    $TVDB->add_serie($id, $custom_fields, $context);
+    $context = $TVDB->add_serie($id, $data, $custom_fields, $context);
+    
+    // get progress
+    if (isset($result['context']) && !empty($result['context'])) {
+      $context = $result['context'];
+    }    
   }
   
   /*
    *  operation to add episodes
    */
-  public static function form_progress_add_episodes($id, &$context) {
+  public static function form_progress_add_episodes($id, $data, &$context) {
+    
+    //set up progress
+    if (empty($context['sandbox'])) {
+      $context['sandbox']['progress'] = 0;
+      $context['sandbox']['max'] = count($data);
+    }
+    
+    //start import
     $TVDB = new TVDBImport;
-    $TVDB->add_episodes($id, $context);
+    $context = $TVDB->add_episodes($id, $data, $context);
+    
+    //set messages
+    $context['results']['episodes'] = $context['sandbox']['progress'];
+    $context['message'] = t('Adding episodes... Finished @count out of @total', array('@count' => $context['sandbox']['progress'], '@total' => $context['sandbox']['max']));
+    
+    //end current batch
+    if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+      $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+    }
   }
   
   /*
-   *  end batch process and set messages
+   *  End batch process and set up messages
    */
   public static function form_progress_end($success, $results, $operations) {
     if ($success) {
+      $type = 'status';
       if (isset($results['serie']) && !empty($results['serie'])) {
-        $message = t('Successfully added "@serie": ', array('@serie' => $results['serie']));
-        $message .= '(';
-        if (isset($results['episodes']) && !empty($results['episodes'])) {
-          $message .= \Drupal::translation()->formatPlural(
-            count($results['episodes']),
-            '1 episode, ', '@count episodes, '
-          );
+        $message = t('Successfully added "@serie".', array('@serie' => $results['serie']));
+        foreach($results as $key => $value) {
+          if (isset($value) && !empty($value) && $key != 'serie') {
+            $count_message = t('Added @count @type.', array('@count' => $value, '@type' => $key));
+            drupal_set_message($count_message, $type);
+          }
         }
-        if (isset($results['genres']) && !empty($results['genres'])) {
-          $message .= \Drupal::translation()->formatPlural(
-            count($results['genres']),
-            '1 genre, ', '@count genres, '
-          );
-        }
-        if (isset($results['posters']) && !empty($results['posters'])) {
-          $message .= \Drupal::translation()->formatPlural(
-            count($results['posters']),
-            '1 poster, ', '@count posters, '
-          );
-        }
-        if (isset($results['fanart']) && !empty($results['fanart'])) {
-          $message .= \Drupal::translation()->formatPlural(
-            count($results['fanart']),
-            '1 fanart.', '@count fanart.'
-          );
-        }
-        $message .= ')';
+      }
+      else {
+        $message = t('Something went wrong...');
+        $type = 'error';
       }
     }
     else {
-      $message = t('Finished with an error.');
+      $message = t('Somethign went wrong...');
+      $type = 'error';
     }
-    drupal_set_message($message);
+    drupal_set_message($message, $type);
   }
 
   /*
@@ -232,3 +242,4 @@ class TVDBImportForm extends FormBase {
     return FALSE;
   }
 }
+
