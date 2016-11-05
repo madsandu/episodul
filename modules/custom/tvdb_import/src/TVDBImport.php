@@ -21,7 +21,7 @@ class TVDBImport extends TVDBConnect {
     return $response;
   }
 
-  private function get_episode($id) {
+  public function get_episode($id) {
     $url = $this->url . '/episodes/' . $id;
     $response = $this->curl_get($url, $this->token);
     return $response;
@@ -308,7 +308,7 @@ class TVDBImport extends TVDBConnect {
     }
   }
 
-  private function process_episode($data, $id) {
+  public function process_episode($data, $id) {
     if (isset($data->id) && !empty($data->id)) {
       if ($this->check_existing_episode($data->id) || !$this->check_existing_serie($data->seriesId)) {
         return '';
@@ -361,7 +361,7 @@ class TVDBImport extends TVDBConnect {
       }
       //Cover
       if (isset($data->filename) && !empty($data->filename)) {
-        $node['tvdb_cover'] = $this->process_single_image($data->id, $this->image_url . $data->filename, 'episodes');
+        $node['tvdb_cover'] = $this->process_single_image($data->episodeName, $this->image_url . $data->filename, 'episodes');
       }
       return $node;
     }
@@ -386,7 +386,7 @@ class TVDBImport extends TVDBConnect {
       }
 
       if (isset($actor->image) && !empty($actor->image)) {
-        $taxonomy['tvdb_author_image'] = $this->process_single_image($actor->name . '-' . $actor->id, $this->image_url . $actor->image, 'actors');
+        $taxonomy['tvdb_author_image'] = $this->process_single_image($actor->name, $this->image_url . $actor->image, 'actors');
       }
       $term =  Term::create($taxonomy)->save();
     }
@@ -397,23 +397,15 @@ class TVDBImport extends TVDBConnect {
 
   public function process_single_image($name, $link, $type) {
     if ($type == 'actors' || $type == 'episodes') {
+      if (strlen($name) > 30) {
+        $name = substr($name, 0, 25);
+      }
       $folder = 'public://images/' . $type . '/';
-    } 
+    }
     else {
       $folder = 'public://images/series/' . $type . '/';
     }
     $node = $this->upload_image($name, $link, $folder);
-    return $node;
-  }
-
-  public function process_multiple_images($data, $serie) {
-    $name = $serie->seriesName;
-    $node = array();
-    foreach ($data as $value) {
-      $path = $value->fileName;
-      $folder = 'public://images/series/' . $value->keyType . '/';
-      $node[] = $this->upload_image($name, $this->image_url . $path, $folder);
-    }
     return $node;
   }
 
@@ -441,6 +433,17 @@ class TVDBImport extends TVDBConnect {
           $node[] = $value;
           break;
       }
+    }
+    return $node;
+  }
+  
+  public function process_multiple_images($data, $serie) {
+    $name = $serie->seriesName;
+    $node = array();
+    foreach ($data as $value) {
+      $path = $value->fileName;
+      $folder = 'public://images/series/' . $value->keyType . '/';
+      $node[] = $this->upload_image($name, $this->image_url . $path, $folder);
     }
     return $node;
   }

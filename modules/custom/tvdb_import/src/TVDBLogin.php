@@ -50,6 +50,10 @@ class TVDBLogin extends TVDBConnect {
     $response = $this->curl_get($url, $token);
     if(isset($response->data) && !empty($response->data)) {
       return TRUE;
+    } 
+    elseif (isset($response->error) && !empty($response->error)) {
+      drupal_set_message('TVDB Error: @error', array('@error' => $response->error), 'error');
+      return FALSE;
     }
     else {
       return FALSE;

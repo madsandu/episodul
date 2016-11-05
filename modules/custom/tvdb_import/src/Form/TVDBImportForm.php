@@ -147,6 +147,8 @@ class TVDBImportForm extends FormBase {
       );
       //start import
       batch_set($batch);
+//      $ep_data = $this->TVDB->get_episode('4993983');
+//      $this->TVDB->process_episode($ep_data->data, $id);
   }
 
   /*
