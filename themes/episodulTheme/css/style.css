@@ -1,3 +1,11 @@
 /**
  * Place your custom styles here.
  */
+
+/*
+* Serie Episodes Block 
+*/
+
+.region-content .serie-episode-block .first-aired-date {
+    float: right;
+}
