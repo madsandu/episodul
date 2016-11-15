@@ -5,6 +5,6 @@ dependencies:
     - tvdb_import
 name: Genres
 vid: genres
-description: 'Genuri seriale'
+description: 'Serie genres'
 hierarchy: 0
 weight: 0

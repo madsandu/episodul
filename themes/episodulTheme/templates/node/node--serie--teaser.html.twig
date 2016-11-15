@@ -1,0 +1,47 @@
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<article{{ attributes.addClass(classes) }}>
+  <div{{ content_attributes.addClass('content') }}>
+    
+    {# Poster #}
+    {% if content.tvdb_poster %}
+        <div class="serie-poster" style="background:url('{{ serie_poster_url }}') no-repeat center">
+          <div class="serie-overlay">
+            {# Title #}
+            <h2 class="serie-title">
+              <a href="{{ url }}">{{ label }}</a>
+            </h2>
+            {# Date #}
+            {% if content.tvdb_firstaired %}
+               <div class="serie-date">
+                {{ content.tvdb_firstaired }}
+               </div>
+            {% endif %}
+            {# Genres #}
+            {% if content.tvdb_genre %}
+              <div class="serie-genres">
+                {{ content.tvdb_genre }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+    {% endif %}
+
+    {# Bottom section #}
+    <div class="serie-bottom">
+      {# Title #}
+      <h2{{ title_attributes }}><a href="{{ url }}" rel="bookmark">{{ label }}</a></h2>
+      {# Button #}
+      <a href="{{ url }}" class="serie-button">{% trans %}See more{% endtrans %}</a>
+    </div>
+  </div>
+</article>

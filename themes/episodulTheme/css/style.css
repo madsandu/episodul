@@ -1,6 +1,98 @@
-/**
- * Place your custom styles here.
- */
+/*
+* Series Teaser Display
+*/
+
+.serie-wrapper .serie-container article {
+    height: 350px;
+    width: 200px;
+    background: #f3f3f3;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.serie-container .serie-bottom h2 {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.serie-container .serie-bottom h2 a:hover {
+    text-decoration: none;
+}
+
+.serie-container .serie-poster {
+    height: 300px;
+    width: 200px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.serie-container .serie-overlay {
+    visibility: hidden;
+    padding: 0 10px;
+    height: 300px;
+}
+
+.serie-container .serie-bottom .serie-button {
+    visibility: hidden;
+    position: relative;
+    left: 50px;
+    top: -27px;
+    padding: 10px 20px;
+    background: black;
+    border-radius: 5px;
+    color: white;
+}
+
+.serie-container .serie-bottom .serie-button:hover {
+    text-decoration: none;
+}
+
+.serie-container article:hover .serie-overlay {
+    visibility: visible;
+    background-color: black;
+    opacity: 0.9;
+    border-radius: 5px 5px 0 0;
+}
+
+.serie-container article:hover .serie-bottom h2 {
+    visibility: hidden;
+}
+
+.serie-container article:hover .serie-bottom .serie-button {
+    visibility: visible;
+}
+
+.serie-container .serie-overlay h2 {
+    font-size: 16px;
+    padding: 15px 0;
+    margin: 0;
+}
+
+.serie-container .serie-overlay h2 a {
+    color: #ffffff;
+}
+
+.serie-container .serie-overlay h2:hover a {
+    text-decoration: none;
+}
+
+.serie-container .serie-overlay .serie-date, .serie-container .serie-overlay .serie-genre {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.serie-container .serie-overlay .field--label {
+    color: #ffffff;
+}
+
+.serie-container .serie-overlay .field--item {
+    color: #f1f1f1;
+}
+
+.serie-container .serie-overlay .field--item a {
+    color: #f1f1f1;
+}
+
 
 /*
 * Serie Episodes Block 
@@ -9,3 +101,5 @@
 .region-content .serie-episode-block .first-aired-date {
     float: right;
 }
+
+

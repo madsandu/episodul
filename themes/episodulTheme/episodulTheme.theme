@@ -5,3 +5,23 @@
  *
  * Place your custom PHP code in this file.
  */
+use Drupal\image\Entity\ImageStyle;
+
+function episodulTheme_preprocess_node(&$variables) {
+  /*
+   * Serie Display
+   */
+  if (!empty($variables['node']) && $variables['node']->getType() == 'serie') {
+    $node = $variables['node'];
+    // TEASER Serie Display
+    if ($variables['view_mode'] == 'teaser') {
+      // Poster 
+      if ($node->tvdb_poster[0]) {
+          $cover_image = $node->tvdb_poster[0]->entity->getFileUri();
+          $image_url = ImageStyle::load('serie_teaser')->buildUrl($cover_image);
+          $variables['serie_poster_url'] = $image_url;
+      }
+      // Title
+    }
+  }
+}

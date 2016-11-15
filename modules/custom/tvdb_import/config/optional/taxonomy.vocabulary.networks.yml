@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - tvdb_import
+name: Networks
+vid: networks
+description: 'TV Networks'
+hierarchy: 0
+weight: 0

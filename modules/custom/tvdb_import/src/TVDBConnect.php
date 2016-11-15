@@ -51,8 +51,8 @@ class TVDBConnect {
     if ($status == 200) {
       return $response;
     } 
-    else if (isset($response->error) && !empty($response->error)) {
-      drupal_set_message(t('Status: ') . $status . ' - ' . $response->error, 'error');
+    else if (isset($response->Error) && !empty($response->Error)) {
+      drupal_set_message(t('Status: ') . $status . ' - ' . $response->Error, 'error');
     }
     else {
       drupal_set_message('Something went wrong...', 'error');

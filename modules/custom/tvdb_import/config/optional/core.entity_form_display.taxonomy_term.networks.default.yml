@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.networks
+id: taxonomy_term.networks.default
+targetEntityType: taxonomy_term
+bundle: networks
+mode: default
+content:
+  name:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: false
+  path: true
