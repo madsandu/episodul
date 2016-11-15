@@ -131,6 +131,14 @@ class TVDBImport extends TVDBConnect {
     );
     Term::create($taxonomy)->save();
   }
+  
+  public function add_network($network) {
+    $taxonomy = array(
+      'name' => $network,
+      'vid' => 'networks'
+    );
+    Term::create($taxonomy)->save();
+  }
 
   public function check_existing_serie($id) {
     $query = \Drupal::entityQuery('node')
@@ -191,8 +199,8 @@ class TVDBImport extends TVDBConnect {
         if (isset($data->overview) && !empty($data->overview)) {
           $context['sandbox']['node']['body'] = $data->overview;
         }
-        // network, runtime, airsDayOfWeek, airsTime, rating, imdbId, lastUpdated, firstAired
-        $basic_fields = array('network', 'runtime', 'airsDayOfWeek', 'airsTime', 'rating', 'imdbId', 'lastUpdated', 'firstAired');
+        // runtime, airsDayOfWeek, airsTime, rating, imdbId, lastUpdated, firstAired
+        $basic_fields = array('runtime', 'airsDayOfWeek', 'airsTime', 'rating', 'imdbId', 'lastUpdated', 'firstAired');
         foreach ($basic_fields as $field) {
           if (isset($data->$field) && !empty($data->$field)) {
             $context['sandbox']['node']['tvdb_' . strtolower($field)] = $data->$field;
@@ -241,12 +249,25 @@ class TVDBImport extends TVDBConnect {
         return $context;
       }
       
-      // STEP 2 - Start adding genres, 30% progress
+      // STEP 2 - Start adding genres, 20% progress
       if ($context['sandbox']['progress'] == 10) {
-        $context['sandbox']['progress'] = 30;
+        $context['sandbox']['progress'] = 20;
         $context['message'] = t('Adding genres...');
         if (isset($data->genre) && !empty($data->genre)) {
           $context['sandbox']['node']['tvdb_genre'] = $this->process_multiple_taxonomy_terms($data->genre, 'genres');
+        }
+        
+        //end batch
+        $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+        return $context;
+      }
+      
+      // STEP 2 - Start adding network, 30% progress
+      if ($context['sandbox']['progress'] == 20) {
+        $context['sandbox']['progress'] = 30;
+        $context['message'] = t('Adding network...');
+        if (isset($data->network) && !empty($data->network)) {
+          $context['sandbox']['node']['tvdb_network'] = $this->process_network($data->network);
         }
         
         //end batch
@@ -393,6 +414,15 @@ class TVDBImport extends TVDBConnect {
     else {
       return FALSE;
     }
+  }
+  
+  private function process_network($value) {
+    $network = array_keys(taxonomy_term_load_multiple_by_name($value, 'networks'));
+    if (is_null($network) || empty($network)) {
+      $this->add_network($value);
+      $network = array_keys(taxonomy_term_load_multiple_by_name($value, 'networks'));
+    }
+    return $network[0];
   }
 
   public function process_single_image($name, $link, $type) {
