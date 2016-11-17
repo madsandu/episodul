@@ -21,7 +21,13 @@ function episodulTheme_preprocess_node(&$variables) {
           $image_url = ImageStyle::load('serie_teaser')->buildUrl($cover_image);
           $variables['serie_poster_url'] = $image_url;
       }
-      // Title
+    }
+    // FULL Serie Display
+    if ($variables['view_mode'] == 'full') {
+      if ($node->tvdb_background[0]) {
+          $cover_image = $node->tvdb_background[0]->entity->getFileUri();
+          $variables['serie_background_url'] = $cover_image;
+      }
     }
   }
 }

@@ -9,17 +9,24 @@
   ]
 %}
 <article{{ attributes.addClass(classes) }}>
+    {%if content.tvdb_background%}
+        <div class="serie-background">
+            
+        </div>
+    {%endif%}
 
-  {{ title_prefix }}
-  {% if not page %}
-    <h2{{ title_attributes }}>
-      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-    </h2>
-  {% endif %}
-  {{ title_suffix }}
 
-  <div{{ content_attributes.addClass('content') }}>
-    {{ content }}
-  </div>
+
+    {{ title_prefix }}
+    {% if not page %}
+        <h2{{ title_attributes }}>
+            <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+        </h2>
+    {% endif %}
+    {{ title_suffix }}
+
+    <div{{ content_attributes.addClass('content') }}>
+        {{ content }}
+    </div>
 
 </article>

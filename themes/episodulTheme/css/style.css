@@ -7,7 +7,7 @@
     width: 200px;
     background: #f3f3f3;
     border-radius: 5px;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
 }
 
 .serie-container .serie-bottom h2 {
@@ -35,11 +35,11 @@
 .serie-container .serie-bottom .serie-button {
     visibility: hidden;
     position: relative;
-    left: 50px;
+    left: 9px;
     top: -27px;
-    padding: 10px 20px;
+    padding: 10px 60px;
     background: black;
-    border-radius: 5px;
+    border-radius: 3px;
     color: white;
 }
 
