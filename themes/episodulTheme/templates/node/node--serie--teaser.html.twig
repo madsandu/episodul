@@ -20,6 +20,8 @@
             <h2 class="serie-title">
               <a href="{{ url }}">{{ label }}</a>
             </h2>
+            {# Flag #}
+            <div class="serie-favorite">{{ content.flag_favorite_series }}</div>
             {# Date #}
             {% if content.tvdb_firstaired %}
                <div class="serie-date">

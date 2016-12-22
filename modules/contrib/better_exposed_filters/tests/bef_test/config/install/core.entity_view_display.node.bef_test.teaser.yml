@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.bef_test
+  module:
+    - user
+id: node.bef_test.teaser
+targetEntityType: node
+bundle: bef_test
+mode: teaser
+content:
+  links:
+    weight: 100
+hidden: {  }

@@ -8,25 +8,103 @@
     'clearfix',
   ]
 %}
+
 <article{{ attributes.addClass(classes) }}>
-    {%if content.tvdb_background%}
-        <div class="serie-background">
-            
-        </div>
-    {%endif%}
-
-
-
-    {{ title_prefix }}
-    {% if not page %}
-        <h2{{ title_attributes }}>
-            <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-        </h2>
-    {% endif %}
-    {{ title_suffix }}
-
     <div{{ content_attributes.addClass('content') }}>
-        {{ content }}
-    </div>
+        {%if content.tvdb_background%}
+            <div class="serie-background clearfix" style="background:url('{{serie_background_url}}') no-repeat top center; background-size: cover;">
+                <div class ="black" style="background-color: black; opacity: 0.8; height: 400px">
+                    <div class="serie-header">
+                        <div class="col-md-2">
+                            {%if content.tvdb_poster%}
+                                <div class="serie-page-poster">
+                                    {{content.tvdb_poster}}
+                                </div>
+                            {%endif%}
+                        </div>
+                        <div class="col-md-8">
+                            {#Title#}
+                            <div class="serie-title">
+                                {{ label }}
+                            </div>
+                            {#Overview#}
+                            <div id="overview">
+                                {%if content.body%}
+                                    <div class="serie-description">
+                                        {{content.body}}
+                                    </div>
+                                {%endif%}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            {#Air date and time #}
+                            {%if content.tvdb_airsdayofweek%}
+                                <div class="serie-air-date">
+                                    {{content.tvdb_airsdayofweek}}
+                                </div>
+                            {%endif%}
+                            {%if content.tvdb_airstime%}
+                                <div class="serie-air-time">
+                                    {{content.tvdb_airstime}}
+                                </div>
+                            {%endif%}
+                        </div>
 
+                        {#Serie information#}
+                        <div class="col-md-8" id="serie-information">
+                            <h3 id="information">Information</h3>
+                            <div id="serie-info">
+                                {%if content.tvdb_genre%}
+                                    <div class="serie-genre">
+                                        {{content.tvdb_genre}}
+                                    </div>
+                                {%endif%}
+                                {%if content.tvdb_runtime%}
+                                    <div class="serie-runtime">
+                                        {{content.tvdb_runtime}}
+                                    </div>  
+                                {%endif%}
+                                {%if content.tvdb_rating%}
+                                    <div class="serie-rating">
+                                        {{content.tvdb_rating}}
+                                    </div>  
+                                {%endif%}
+                                {%if content.tvdb_status%}
+                                    <div class="serie-status">
+                                        {{content.tvdb_status}}
+                                    </div>  
+                                {%endif%}
+                                {%if content.tvdb_firstaired%}
+                                    <div class="serie-firstaired">
+                                        {{content.tvdb_firstaired}}
+                                    </div>
+                                {%endif%}
+                                {%if content.tvdb_network%}
+                                    <div class="serie-network">
+                                        {{content.tvdb_network}}
+                                    </div>  
+                                {%endif%}
+                                {%if content.tvdb_aliases%}
+                                    <div class="serie-aka">
+                                        {{content.tvdb_aliases}}
+                                    </div>
+                                {%endif%}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {%endif%}
+        <div class="container">
+            <div class="button-actors">
+                <h3 id="button">Actors</h3>
+                {%if content.tvdb_actors%}
+                    <div class="serie-actors">              
+                        {{content.tvdb_actors}}
+                    </div>
+                {%endif%}
+            </div>
+        </div>
+    </div>
 </article>

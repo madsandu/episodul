@@ -1,0 +1,20 @@
+<div class="panel panel-default col-xs-4 col-sm-12">
+  <div class="panel-heading" role="tab" id="headingOne">
+    <h4 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#block-continuing-options" aria-expanded="false" aria-controls="block-continuing-options">
+          {{ title_prefix }}
+          {% if label %}
+            <span{{ title_attributes.addClass('block-title') }}>{{ label }}</span>
+          {% endif %}
+          {{ title_suffix }}
+      </a>
+    </h4>
+  </div>
+  <div id="block-continuing-options" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+        {% block content %}
+          {{ content }}
+        {% endblock %}
+    </div>
+  </div>
+</div>

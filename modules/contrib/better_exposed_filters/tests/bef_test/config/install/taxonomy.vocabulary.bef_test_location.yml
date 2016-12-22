@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'BEF Test Location'
+vid: bef_test_location
+description: 'Hierarchical vocabulary for testing Better Exposed Filters'
+hierarchy: 0
+weight: 0

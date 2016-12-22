@@ -2,3 +2,9 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+      css/style_1.css: {}
+      css/bootstrap-5-col.css: {}
+  js:
+    js/custom.js: {}
+  dependencies:
+    - core/jquery
