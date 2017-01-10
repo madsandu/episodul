@@ -47,7 +47,7 @@ abstract class FlagKernelTestBase extends KernelTestBase {
     $this->installSchema('system', ['sequences']);
     $this->installSchema('flag', ['flag_counts']);
     $this->installSchema('node', ['node_access']);
-    $this->installConfig(['filter', 'node']);
+    $this->installConfig(['filter', 'flag', 'node']);
 
     $this->flagService = \Drupal::service('flag');
   }

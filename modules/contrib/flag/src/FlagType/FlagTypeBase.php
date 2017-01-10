@@ -129,6 +129,23 @@ abstract class FlagTypeBase extends PluginBase implements FlagTypePluginInterfac
   }
 
   /**
+   * Defines options for extra permissions.
+   *
+   * @return array
+   *  An array of options suitable for FormAPI.
+   */
+  protected function getExtraPermissionsOptions() {
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function hasExtraPermission($option) {
+    return in_array($option, $this->configuration['extra_permissions']);
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function actionPermissions(FlagInterface $flag) {

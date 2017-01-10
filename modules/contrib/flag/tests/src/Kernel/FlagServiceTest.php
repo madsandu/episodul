@@ -31,13 +31,13 @@ class FlagServiceTest extends FlagKernelTestBase {
 
     // Search for flag.
     $user_with_access = $this->createUser(['flag ' . $flag->id()]);
-    $result = $this->flagService->getFlags('node', 'article', $user_with_access);
+    $result = $this->flagService->getUsersFlags($user_with_access, 'node', 'article');
     $this->assertIdentical(count($result), 1, 'Found flag type');
     $this->assertEquals([$flag->id()], array_keys($result));
 
     // Search denied.
     $user_no_access = $this->createUser();
-    $empty_result = $this->flagService->getFlags('node', 'article', $user_no_access);
+    $empty_result = $this->flagService->getUsersFlags($user_no_access, 'node', 'article');
     $this->assertIdentical(count($empty_result), 0, 'Flag type access denied');
   }
 

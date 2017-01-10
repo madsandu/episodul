@@ -20,14 +20,14 @@
   src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/MTP_ySUJH_bn48VBG8sNShsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
 }
 
-html {
+/*html {
   zoom: 1.1;
-}
+}*/
 
 /* Fix drag and drop offset in ckeditor toolbar configuration */
-.adminimal .ckeditor-toolbar-configuration.js-form-wrapper.form-wrapper {
+/*.adminimal .ckeditor-toolbar-configuration.js-form-wrapper.form-wrapper {
   zoom: 0.9;
-}
+}*/
 
 body.adminimal {
   font: normal 81.3%/1.538em "Open Sans", sans-serif;
@@ -177,8 +177,8 @@ body.adminimal {
 
 .adminimal .vertical-tabs {
   border-radius: 0;
-  border: none;
-  background: transparent;
+  border: 1px solid #b5b5b5;
+  background: #f2f2f0;
 }
 
 .adminimal .vertical-tabs__panes {
@@ -768,4 +768,41 @@ body.adminimal {
 /* Main menu icons end. */
 .adminimal.path-batch .layout-container {
     padding-top: 1.3rem;
+}
+
+/* Module: Views */
+.adminimal .views-display-top {
+  background-color: #fafafa;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.adminimal .views-displays {
+  border: 1px solid #e8e8e8;
+}
+
+.adminimal .views-admin .form-edit .form-actions {
+  border-color: #e8e8e8;
+  background-color: #fafafa;
+}
+
+.adminimal .views-ui-display-tab-bucket .views-display-setting:nth-of-type(even) {
+  background-color: inherit;
+}
+
+.adminimal .views-displays .tabs.secondary a {
+  border-radius: 0;
+}
+
+.adminimal .view-preview-form__title {
+  background-color: #fafdfe;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 1.2em;
+}
+
+.adminimal .views-preview-wrapper {
+  border: 1px solid #e8e8e8;
+}
+
+.adminimal .views-ui-dialog .views-override {
+  background-color: #f6f6f6;
 }

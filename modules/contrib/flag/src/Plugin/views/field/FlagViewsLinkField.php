@@ -2,6 +2,7 @@
 
 namespace Drupal\flag\Plugin\views\field;
 
+use Drupal\Core\Link;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\Core\Form\FormStateInterface;
@@ -119,9 +120,9 @@ class FlagViewsLinkField extends FieldPluginBase {
     $flag = $this->getFlag();
     $link_type_plugin = $flag->getLinkTypePlugin();
 
-    $link = $link_type_plugin->getLink($flag, $entity);
+    $link = $link_type_plugin->getAsLink($flag, $entity);
 
-    return $link;
+    return $link->toRenderable();
   }
 
 }

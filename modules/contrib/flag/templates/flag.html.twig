@@ -31,5 +31,8 @@ action_class
 ] %}
 {% set attributes = attributes.addClass(classes) %}
 
+{# Set nofollow to prevent search bots from crawling anonymous flag links #}
+{% set attributes = attributes.setAttribute('rel', 'nofollow') %}
+
 <a{{ attributes }}>{{ title }}</a>
 {% endspaceless %}

@@ -108,7 +108,7 @@ trait FlagCreateTrait {
     switch ($link_type) {
       case 'comment':
         $default = array_merge($default, [
-          'flagTypeCpnfig' => [
+          'flagTypeConfig' => [
             'access_author' => $this->randomString(),
           ],
         ]);

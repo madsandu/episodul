@@ -6,11 +6,10 @@ dependencies:
   - flag
   - views
   - node
-  - user
 package: Flags
 
-# Information added by Drupal.org packaging script on 2016-11-29
-version: '8.x-4.x-dev'
+# Information added by Drupal.org packaging script on 2017-01-08
+version: '8.x-4.0-alpha1'
 core: '8.x'
 project: 'flag'
-datestamp: 1480387686
+datestamp: 1483918447

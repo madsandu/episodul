@@ -56,7 +56,7 @@ class FlagService implements FlagServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getFlags($entity_type = NULL, $bundle = NULL, AccountInterface $account = NULL) {
+  public function getAllFlags($entity_type = NULL, $bundle = NULL) {
     $query = $this->entityQueryManager->get('flag');
 
     if ($entity_type != NULL) {
@@ -73,9 +73,14 @@ class FlagService implements FlagServiceInterface {
       });
     }
 
-    if ($account == NULL) {
-      return $flags;
-    }
+    return $flags;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getUsersFlags(AccountInterface $account, $entity_type = NULL, $bundle = NULL) {
+    $flags = $this->getAllFlags($entity_type, $bundle);
 
     $filtered_flags = [];
     foreach ($flags as $flag_id => $flag) {

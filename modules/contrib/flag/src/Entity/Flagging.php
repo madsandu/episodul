@@ -18,6 +18,12 @@ use Drupal\user\UserInterface;
  * @ContentEntityType(
  *  id = "flagging",
  *  label = @Translation("Flagging"),
+ *  label_singular = @Translation("flagging"),
+ *  label_plural = @Translation("flaggings"),
+ *  label_count = @PluralTranslation(
+ *    singular = "@count flagging",
+ *    plural = "@count flaggings",
+ *  ),
  *  bundle_label = @Translation("Flagging"),
  *  handlers = {
  *    "storage" = "Drupal\flag\Entity\Storage\FlaggingStorage",
