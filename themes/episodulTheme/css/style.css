@@ -30,9 +30,10 @@
     float: right;
 }
 
-/*.serie-wrapper .view-filters button {
+/* Hide the search form and submit button exposed filter */
+.serie-wrapper .view-filters button, .serie-wrapper .form-item-title  {
     display: none;
-}*/
+}
 
 /*
 * Series Teaser Display
