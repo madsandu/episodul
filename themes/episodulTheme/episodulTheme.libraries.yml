@@ -6,5 +6,6 @@ global-styling:
       css/bootstrap-5-col.css: {}
   js:
     js/custom.js: {}
+    js/grid_list_script.js: {}
   dependencies:
     - core/jquery

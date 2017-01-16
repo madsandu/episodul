@@ -1,0 +1,240 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - flag.flag.favorite_series
+    - node.type.serie
+  module:
+    - better_exposed_filters
+    - datetime
+    - flag
+    - node
+    - user
+id: favorite_series
+label: 'Favorite Series'
+module: views
+description: 'Favorite series per user'
+tag: ''
+base_table: node_field_data
+base_field: nid
+core: 8.x
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: 0
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: 1
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          bef:
+            general:
+              allow_secondary: 0
+              secondary_label: 'Advanced options'
+            sort:
+              bef_format: default
+              advanced:
+                collapsible: 0
+                collapsible_label: 'Sort options'
+                combine: 1
+                combine_rewrite: "Date Asc|Oldest\nDate Desc|Newest\nTitle Asc|A - Z\nTitle Desc|Z - A"
+                reset: 0
+                reset_label: ''
+                is_secondary: 0
+      pager:
+        type: some
+        options:
+          items_per_page: 20
+          offset: 0
+      style:
+        type: default
+        options:
+          row_class: 'serie-container my-serie col-xs-12 col-sm-4 col-md-3 col-lg-5ths'
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          view_mode: teaser
+      fields:
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          entity_type: node
+          entity_field: title
+          label: ''
+          alter:
+            alter_text: false
+            make_link: false
+            absolute: false
+            trim: false
+            word_boundary: false
+            ellipsis: false
+            strip_tags: false
+            html: false
+          hide_empty: false
+          empty_zero: false
+          settings:
+            link_to_entity: true
+          plugin_id: field
+          relationship: none
+          group_type: group
+          admin_label: ''
+          exclude: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+      filters:
+        status:
+          value: '1'
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: node
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            serie: serie
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+      sorts:
+        tvdb_firstaired_value:
+          id: tvdb_firstaired_value
+          table: node__tvdb_firstaired
+          field: tvdb_firstaired_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: true
+          expose:
+            label: Date
+          granularity: day
+          plugin_id: datetime
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: true
+          expose:
+            label: Title
+          entity_type: node
+          entity_field: title
+          plugin_id: standard
+      title: ''
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content:
+            value: '<h2>My Series</h2>'
+            format: basic_html
+          plugin_id: text
+      footer: {  }
+      empty: {  }
+      relationships:
+        flag_relationship:
+          id: flag_relationship
+          table: node_field_data
+          field: flag_relationship
+          relationship: none
+          group_type: group
+          admin_label: Flags
+          required: true
+          flag: favorite_series
+          user_scope: current
+          entity_type: node
+          plugin_id: flag_relationship
+      arguments: {  }
+      display_extenders: {  }
+      css_class: 'serie-wrapper container autosubmit'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  favorite_page:
+    display_plugin: page
+    id: favorite_page
+    display_title: Page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: my-series
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }

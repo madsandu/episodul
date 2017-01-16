@@ -1,41 +1,4 @@
 /*
-* Series page
-*/
-@media only screen and (min-width : 768px) {
-    .path-series .region-sidebar-first {
-        margin-top: 75px;
-    }
-}
-
-@media only screen and (max-width : 768px) {
-    .path-series .panel-group .panel + .panel {
-        margin: 0;
-    }
-
-    .serie-wrapper .view-filters {
-        display: none;
-    }
-}
-
-.serie-wrapper .control-label {
-    display: none;
-}
-
-.serie-wrapper .view-filters {
-    width: 100%;
-    height: 40px;
-}
-
-.serie-wrapper .view-filters .views-exposed-form {
-    float: right;
-}
-
-/* Hide the search form and submit button exposed filter */
-.serie-wrapper .view-filters button, .serie-wrapper .form-item-title  {
-    display: none;
-}
-
-/*
 * Series Teaser Display
 */
 
@@ -75,10 +38,11 @@
     position: relative;
     left: 9px;
     top: -27px;
-    padding: 10px 60px;
+    padding: 10px 56px;
     background: black;
     border-radius: 3px;
     color: white;
+    font-weight: bold;
 }
 
 .serie-container .serie-bottom .serie-button:hover {
@@ -101,7 +65,8 @@
 }
 
 .serie-container .serie-overlay h2 {
-    font-size: 16px;
+    font-weight: bold;
+    font-size: 18px;
     padding: 15px 0;
     margin: 0;
     max-width: 140px;
@@ -115,7 +80,7 @@
     text-decoration: none;
 }
 
-.serie-container .serie-overlay .serie-date, .serie-container .serie-overlay .serie-genre {
+.serie-container .serie-overlay .serie-date, .serie-container .serie-overlay .serie-genre, .serie-container .serie-overlay .serie-network {
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -131,6 +96,223 @@
 .serie-container .serie-overlay .field--item a {
     color: #f1f1f1;
 }
+
+.serie-container .serie-overlay .serie-genres .field--item {
+    display: inline;
+}
+
+.serie-container .serie-overlay .serie-genres .field__items .field--item a:after {
+    content: ', ';
+}
+
+.serie-container .serie-overlay .serie-genres .field__items .field--item:last-child a:after {
+    content: '';
+}
+
+.serie-container .serie-list-poster {
+    display: none;
+}
+
+/* List view */
+
+.list-view .serie-container {
+    float: left;
+    height: 110px;
+    padding: 0;
+}
+
+.list-view .serie-container article {
+    margin: 0;
+    width: 100%;
+    height: 110px;
+    border-radius: 0;
+}
+
+.list-view article:hover .serie-overlay {
+    border-radius: 0;
+    opacity: 1;
+}
+
+
+.list-view .serie-list-poster {
+    visibility: visible;
+    display: inline-block;
+    max-height: 90px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.list-view .serie-poster {
+    background: transparent !important;
+    height: 100px;
+    width: 100%;
+}
+
+.list-view .serie-overlay {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    display: inline-block;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.list-view .serie-poster {
+    border-radius: 0;
+}
+
+.list-view .serie-bottom {
+    position: absolute;
+    right: 25px;
+    top: 10px;
+}
+
+.list-view .serie-overlay .serie-title {
+    font-weight: bold;
+    visibility: visible;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: 100px;
+    top: 30px;
+    color: black;
+    white-space: nowrap;
+}
+
+.list-view article:hover .serie-title {
+    color: white;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-view .serie-overlay .serie-title a {
+    visibility: visible;
+    color: black;
+}
+
+.list-view .serie-bottom:hover  {
+    color: white !important;
+}
+
+.list-view article:hover .serie-title a {
+    color: white;
+}
+
+.list-view .serie-overlay .serie-date {
+    position: absolute;
+    left: 330px;
+    top: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.list-view .serie-overlay .serie-genres {
+    position: absolute;
+    top: 52px;
+    left: 100px;
+}
+
+.list-view .serie-overlay .serie-genres a {
+    visibility: visible;
+    color: black;
+}
+
+.list-view article:hover .serie-overlay .serie-genres a {
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-view article:hover .serie-overlay .serie-genres {
+    max-width: 200px;
+}
+
+.list-view .serie-overlay .serie-genres .field--label {
+    display: none;
+}
+
+.list-view .serie-overlay .serie-network {
+    display: block;
+    position: absolute;
+    left: 470px;
+    top: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.list-view .serie-bottom .serie-button {
+   visibility: visible;
+   position: relative;
+   left: 9px;
+   top: 30px;
+}
+
+.list-view .serie-bottom h2 {
+    display: none;
+}
+
+.list-view .serie-overlay .serie-favorite {
+    visibility: visible;
+    position: absolute;
+    right: 220px;
+    top: 5px;
+}
+
+.list-view .serie-overlay .serie-favorite .favorite-icon {
+    top: 30px;
+    right: 20px;
+}
+
+.list-view article:hover .serie-button {
+    color: black;
+    background: white;
+}
+
+@media only screen and (max-width : 1200px) {
+    
+    .list-view .serie-overlay .serie-genres, .list-view .serie-overlay .serie-date, .list-view .serie-overlay .serie-network {
+        display: none;
+    }
+    
+    .list-view .serie-overlay .serie-title {
+        max-width: 300px !important;
+        overflow: visible;
+    }
+    
+    .list-view article:hover .serie-title {
+        white-space: normal;
+        text-overflow: clip;
+    }
+    
+    .list-view .serie-bottom .serie-button {
+        padding: 10px 10px !important;
+    }
+    
+    .list-view .serie-overlay .serie-favorite {
+        right: 100px !important;
+    }
+}
+
+@media only screen and (max-width : 500px) {
+    .list-view .serie-overlay .serie-title {
+        white-space: normal;
+        text-overflow: clip;
+        max-width: 100px !important;
+    }
+    
+    .list-view article:hover .serie-title {
+        white-space: normal;
+        text-overflow: clip;
+    }
+    
+    .list-view .serie-overlay .serie-title a {
+        font-weight: normal;
+        font-size: 16px;
+    }
+}    
 
 /*
 * Serie Episodes Block 
@@ -241,10 +423,27 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
     display: none;
 }
 
+@media only screen and (min-width : 768px) {
+    .path-series .region-sidebar-first {
+        margin-top: 75px;
+    }
+}
+
+@media only screen and (max-width : 768px) {
+    .serie-wrapper .serie-header {
+        display: none !important;
+    }
+    
+    .path-series .panel-group .panel + .panel {
+        margin: 0;
+    }
+}
+
 /*
-* Facets
+* All series page 
 */
 
+/* Facets */
 .panel-body .js-facets-checkbox-links {
     list-style-type: none;
     padding: 0;
@@ -272,4 +471,108 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
     .panel-body ul .facet-item label {
         margin-left: 2px;
     }
+}
+
+/* List-Grid buttons */
+
+.list-grid {
+    width: 60px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 11px;
+}
+
+.list-grid .grid, .list {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 30px;
+    float: left;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    border: 2px solid grey;
+    background-size: 64px;
+    cursor: pointer;
+}
+
+.list-grid .grid {
+    background-image: url(../img/list-grid-sprite.png);
+    background-position: left 5px bottom 4px;
+    cursor: default;
+    pointer-events: none;
+    background-color: black;
+    border-color: black;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    z-index: 1;
+    margin-right: -2px;
+}
+
+.list-view .grid {
+    background-position: left 5px top 6px;
+    cursor: pointer;
+    pointer-events: all;
+    background-color: #fff;
+    border-color: grey;
+}
+
+.list-view .list {
+    background-position: right 4px bottom 5px !important;
+    cursor: default;
+    pointer-events: none;
+    background-color: black;
+    border-color: black;
+    z-index: 2;
+}
+
+.list-grid .list {
+    background-image: url(../img/list-grid-sprite.png);
+    background-position: right 4px top 5px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.serie-wrapper .control-label {
+    display: none;
+}
+
+.serie-wrapper .view-filters {
+    display: inline-block;
+    float: right;
+}
+
+.serie-wrapper .view-filters .views-exposed-form {
+    float: left;
+}
+
+/* Hide the search form and submit button exposed filter */
+.serie-wrapper .view-filters button, .serie-wrapper .form-item-title  {
+    display: none;
+}
+
+.serie-wrapper .serie-header {
+    display: block;
+    height: 70px;
+}
+
+.serie-wrapper .serie-header h2 {
+    margin: 0;
+    padding: 0;
+    float:left;
+}
+
+.serie-wrapper .bef-exposed-form .form-control {
+    height: 30px;
+    border: 2px solid grey;
+    border-radius: 3px;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+}
+
+.serie-wrapper .bef-exposed-form .select-wrapper:after {
+    color: black;
 }

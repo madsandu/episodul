@@ -1,0 +1,27 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - facets.facet.network
+  module:
+    - facets
+    - system
+  theme:
+    - episodulTheme
+id: network
+theme: episodulTheme
+region: '-1'
+weight: -5
+provider: null
+plugin: 'facet_block:network'
+settings:
+  id: 'facet_block:network'
+  label: Network
+  provider: facets
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: /series
+    negate: false
+    context_mapping: {  }

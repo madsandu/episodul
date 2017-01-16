@@ -1,0 +1,16 @@
+name: 'Episodul Views'
+type: module
+core: 8.x
+dependencies:
+  - better_exposed_filters
+  - block
+  - datetime
+  - facets
+  - flag
+  - node
+  - search_api
+  - system
+  - user
+  - views
+  - views_autocomplete_filters
+package: 'Episodul Features'

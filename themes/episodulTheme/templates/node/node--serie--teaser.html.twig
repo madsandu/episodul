@@ -15,7 +15,9 @@
     {# Poster #}
     {% if content.tvdb_poster %}
         <div class="serie-poster" style="background:url('{{ serie_poster_url }}') no-repeat center">
+          
           <div class="serie-overlay">
+              <img class="serie-list-poster" src="{{ serie_poster_url }}">
             {# Title #}
             <h2 class="serie-title">
               <a href="{{ url }}">{{ label }}</a>
@@ -32,6 +34,12 @@
             {% if content.tvdb_genre %}
               <div class="serie-genres">
                 {{ content.tvdb_genre }}
+              </div>
+            {% endif %}
+            {# Network #}
+            {% if content.tvdb_network %}
+              <div class="serie-network">
+                {{ content.tvdb_network }}
               </div>
             {% endif %}
           </div>

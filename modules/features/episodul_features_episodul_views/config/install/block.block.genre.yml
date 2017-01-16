@@ -1,0 +1,33 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - facets.facet.genre
+  module:
+    - facets
+    - system
+  theme:
+    - episodulTheme
+id: genre
+theme: episodulTheme
+region: '-1'
+weight: -6
+provider: null
+plugin: 'facet_block:genre'
+settings:
+  id: 'facet_block:genre'
+  label: Genre
+  provider: facets
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: /series
+    negate: false
+    context_mapping: {  }
+  other_facet:
+    id: other_facet
+    facets: 'facet_block:genre'
+    facet_value: ''
+    negate: false
+    context_mapping: {  }

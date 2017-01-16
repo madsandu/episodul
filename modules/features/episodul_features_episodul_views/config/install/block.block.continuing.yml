@@ -1,0 +1,27 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - facets.facet.continuing
+  module:
+    - facets
+    - system
+  theme:
+    - episodulTheme
+id: continuing
+theme: episodulTheme
+region: '-1'
+weight: -4
+provider: null
+plugin: 'facet_block:continuing'
+settings:
+  id: 'facet_block:continuing'
+  label: Continuing
+  provider: facets
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: /series
+    negate: false
+    context_mapping: {  }
