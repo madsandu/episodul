@@ -1,0 +1,11 @@
+<div class="col-xs-12 col-sm-4 facet-container-mobile">
+    {{ title_prefix }}
+    {% if label %}
+      <h3 {{ title_attributes.addClass('block-title') }}>{{ label }}</h3>
+    {% endif %}
+    {{ title_suffix }}
+
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+</div>

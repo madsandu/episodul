@@ -1,0 +1,118 @@
+.facet-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.search-serie {
+    margin-top: 20px;
+}
+
+.search-serie .form-inline .form-control {
+    width: 100%;
+}
+
+.search-serie .button {
+    position: absolute;
+    margin: 0;
+    top: 2px;
+    right: 10px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    width: 30px;
+    overflow: hidden; 
+}
+
+@media only screen and (min-width : 1200px) {
+    .top-bar {
+        display:none;
+    }
+}
+
+@media only screen and (max-width : 1200px) {
+    .sidebar-first {
+        display: none;
+    }
+}
+
+.top-bar {
+    background-color: #f3f3f3;
+    margin: 0 0 30px 0;
+    padding: 10px 0 20px 0;
+    z-index: 1;
+}
+
+.top-bar .facet-container-mobile h3 {
+    color: black;
+    margin-top: 5px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.top-bar .facet-container-mobile .facets-dropdown {
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+}
+
+/* Facet Checkboxes */
+
+.facets-checkbox {
+    -webkit-appearance: none;
+    margin: 0 !important;
+    background-color: #fafafa;
+    border: 2px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px !important;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.facets-checkbox:hover {
+    background-color: #e9ecee;
+    border: 2px solid grey;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+}
+
+/*.facets-checkbox:hover:after {
+    content: '\2B1B';
+    font-size: 14px;
+    position: absolute;
+    top: -1px;
+    left: 3px;
+    color: grey;
+}*/
+
+
+.facets-checkbox:active, .facets-checkbox:checked:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.facets-checkbox:checked {
+    background-color: #e9ecee;
+    border: 2px solid green;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+    color: #99a1a7;
+}
+
+.facets-checkbox:checked:after {
+    content: '\2B1B';
+    font-size: 14px;
+    position: absolute;
+    top: -1px;
+    left: 3px;
+    color: green;
+}
+
+.facet-item label {
+    margin-left: 10px !important;
+    margin-bottom: 0 !important;
+}
+
+.facet-item label span {
+    color: black;
+    font-size: 16px;
+    padding-bottom: 5px;
+}

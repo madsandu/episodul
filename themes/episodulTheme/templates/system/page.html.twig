@@ -41,7 +41,7 @@
       {# Header #}
       {% if page.header %}
         {% block header %}
-          <div class="col-sm-12" role="heading">
+          <div class="col-sm-12 top-bar" role="heading">
             {{ page.header }}
           </div>
         {% endblock %}
@@ -50,7 +50,7 @@
       {# Sidebar First #}
       {% if page.sidebar_first %}
         {% block sidebar_first %}
-          <aside class="col-sm-3" role="complementary">
+          <aside class="col-sm-3 sidebar-first" role="complementary">
             {{ page.sidebar_first }}
           </aside>
         {% endblock %}
@@ -104,7 +104,7 @@
       {# Sidebar Second #}
       {% if page.sidebar_second %}
         {% block sidebar_second %}
-          <aside class="col-sm-3" role="complementary">
+          <aside class="col-sm-3 sidebar-second" role="complementary">
             {{ page.sidebar_second }}
           </aside>
         {% endblock %}

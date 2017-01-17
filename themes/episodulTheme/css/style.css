@@ -244,10 +244,10 @@
 }
 
 .list-view .serie-bottom .serie-button {
-   visibility: visible;
-   position: relative;
-   left: 9px;
-   top: 30px;
+    visibility: visible;
+    position: relative;
+    left: 9px;
+    top: 30px;
 }
 
 .list-view .serie-bottom h2 {
@@ -272,25 +272,25 @@
 }
 
 @media only screen and (max-width : 1200px) {
-    
+
     .list-view .serie-overlay .serie-genres, .list-view .serie-overlay .serie-date, .list-view .serie-overlay .serie-network {
         display: none;
     }
-    
+
     .list-view .serie-overlay .serie-title {
         max-width: 300px !important;
         overflow: visible;
     }
-    
+
     .list-view article:hover .serie-title {
         white-space: normal;
         text-overflow: clip;
     }
-    
+
     .list-view .serie-bottom .serie-button {
         padding: 10px 10px !important;
     }
-    
+
     .list-view .serie-overlay .serie-favorite {
         right: 100px !important;
     }
@@ -302,15 +302,25 @@
         text-overflow: clip;
         max-width: 100px !important;
     }
-    
+
     .list-view article:hover .serie-title {
         white-space: normal;
         text-overflow: clip;
     }
-    
+
     .list-view .serie-overlay .serie-title a {
         font-weight: normal;
         font-size: 16px;
+    }
+    
+    .list-view .serie-bottom .serie-button {
+        font-weight: normal;
+        font-size: 13px;
+        padding: 10px 3px !important;
+    }
+    
+    .list-view .serie-overlay .serie-favorite .favorite-icon {
+        right: -12px;
     }
 }    
 
@@ -390,6 +400,27 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
 .serie-actors > div > div > div > h2 > a {
     font-size: 12px;
 }
+
+.actor-img {
+    width: 50px;
+}
+
+#actor-name > h2 {
+    font-size: 12px;
+}
+
+#actor-name {
+    margin-top: 25px; 
+}
+
+.actor-role {
+    float: right;
+    margin-top: 25px;
+}
+
+span.title > a {
+    color: red;
+}
 /*
 * Favorite link
 */
@@ -433,7 +464,7 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
     .serie-wrapper .serie-header {
         display: none !important;
     }
-    
+
     .path-series .panel-group .panel + .panel {
         margin: 0;
     }

@@ -1,8 +1,24 @@
-<div class="actor">
-    <h2{{ title_attributes }}>
-      <a href="{{ url }}" rel="bookmark">{{ name }}</a>
-    </h2>
+<div class="actor row">
     <div{{ content_attributes.addClass('content') }}>
-      {{ content }}
+        <div class="col-md-2">
+            {%if content.tvdb_author_image%}
+                <div class="actor-img">
+                    {{content.tvdb_author_image}}
+                </div>
+            {%endif%}
+        </div>
+        <div id ="actor-name" class="col-md-2">
+            <h2{{ title_attributes }}>
+                <a href="{{ url }}" rel="bookmark">{{ name }}</a>
+            </h2>
+        </div>
+
+        <div class="col-md-8">
+            {%if content.tvdb_role%}
+                <div class="actor-role">
+                    {{content.tvdb_role}}
+                </div>
+            {%endif%}
+        </div>
     </div>
 </div>

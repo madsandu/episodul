@@ -61,8 +61,8 @@
     function remove_grid_classes() {
         // All series
         $('.serie-container').removeClass('col-lg-3');
-        $('.serie-container').removeClass('col-md-4');
-        $('.serie-container').removeClass('col-sm-6');
+        $('.serie-container').removeClass('col-md-3');
+        $('.serie-container').removeClass('col-sm-4');
 
         //Favorite Series
         $('.my-serie').removeClass('col-lg-5ths');
@@ -73,8 +73,8 @@
     function add_grid_classes() {
         //All series
         $('.serie-container').addClass('col-lg-3');
-        $('.serie-container').addClass('col-md-4');
-        $('.serie-container').addClass('col-sm-6');
+        $('.serie-container').addClass('col-md-3');
+        $('.serie-container').addClass('col-sm-4');
 
         //Favorite Series
         $('.my-serie').addClass('col-lg-5ths');
