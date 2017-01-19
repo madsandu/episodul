@@ -23,6 +23,7 @@ dependencies:
     - field.field.node.serie.tvdb_runtime
     - field.field.node.serie.tvdb_status
     - field.field.node.serie.tvdb_title_ro
+    - field.field.node.serie.tvdb_year
     - image.style.thumbnail
     - node.type.serie
   module:
@@ -104,6 +105,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+  tvdb_year:
+    weight: 17
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
   tvdb_genre:
     weight: 12
     settings:

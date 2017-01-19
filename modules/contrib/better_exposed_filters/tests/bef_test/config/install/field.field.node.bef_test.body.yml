@@ -6,6 +6,9 @@ dependencies:
     - node.type.bef_test
   module:
     - text
+  enforced:
+    module:
+      - bef_test
 id: node.bef_test.body
 field_name: body
 entity_type: node

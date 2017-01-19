@@ -1,0 +1,23 @@
+## field.field.node.series.tvdb_year.yml
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.tvdb_year
+    - node.type.serie
+id: node.serie.tvdb_year
+field_name: tvdb_year
+entity_type: node
+bundle: serie
+label: Year
+description: 'Year that the series was launched'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

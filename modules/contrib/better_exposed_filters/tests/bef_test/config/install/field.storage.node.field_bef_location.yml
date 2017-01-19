@@ -4,6 +4,9 @@ dependencies:
   module:
     - node
     - taxonomy
+  enforced:
+    module:
+      - bef_test
 id: node.field_bef_location
 field_name: field_bef_location
 entity_type: node

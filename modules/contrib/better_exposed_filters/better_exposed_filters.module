@@ -45,7 +45,7 @@ function better_exposed_filters_theme($existing, $type, $theme, $path) {
       'render element' => 'element',
     ],
     'bef_hidden' => [
-      'variables' => [],
+      'render element' => 'element',
     ],
     'bef_tree' => [
       'variables' => [],
@@ -70,6 +70,37 @@ function template_preprocess_bef_checkboxes(&$variables) {
 function template_preprocess_bef_radios(&$variables) {
   $variables['children'] = Element::children($variables['element']);
   _bef_preprocess_nested_elements($variables);
+}
+
+/**
+ * Implements hook_template_preprocess_default_variables_alter().
+ */
+function template_preprocess_bef_hidden(&$variables) {
+  $element = $variables['element'];
+
+  // bef_hidden is only used for multi-select elements being converted to
+  // hidden.
+  $variables['isMultiple'] = TRUE;
+  $variables['selected'] = empty($element['#value']) ? $element['#default_value'] : $element['#value'];
+  $variables['hiddenElements'] = [];
+  foreach ($element['#options'] as $value => $label) {
+    $variables['hiddenElements'][$value] = [
+      '#type' => 'hidden',
+      '#value' => $value,
+      '#name' => $element['#name'] . '[]',
+    ];
+  }
+
+  // @todo:
+  // Check for optgroups.  Put subelements in the $element_set array and add a
+  // group heading. Otherwise, just add the element to the set.
+  //$element_set = array();
+  //if (is_array($elem)) {
+  //  $element_set = $elem;
+  //}
+  //else {
+  //  $element_set[$option] = $elem;
+  //}
 }
 
 function template_preprocess_bef_links(&$variables) {

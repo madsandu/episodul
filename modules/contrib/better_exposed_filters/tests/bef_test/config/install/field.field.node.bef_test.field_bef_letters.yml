@@ -6,6 +6,9 @@ dependencies:
     - node.type.bef_test
   module:
     - options
+  enforced:
+    module:
+      - bef_test
 id: node.bef_test.field_bef_letters
 field_name: field_bef_letters
 entity_type: node

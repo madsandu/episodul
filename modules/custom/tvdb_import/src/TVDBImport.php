@@ -206,6 +206,10 @@ class TVDBImport extends TVDBConnect {
             $context['sandbox']['node']['tvdb_' . strtolower($field)] = $data->$field;
           }
         }
+        //year
+        if (isset($data->firstAired) && !empty($data->firstAired)) {
+          $context['sandbox']['node']['tvdb_year'] = date('Y', strtotime($data->firstAired));
+        }
         //status 
         if (isset($data->status) && !empty($data->status)) {
           if($data->status == "Continuing") {
@@ -380,7 +384,7 @@ class TVDBImport extends TVDBConnect {
           $node['tvdb_' . strtolower($field)] = $this->process_multiple_field_values($data->$field);
         }
       }
-      //Cover
+      //cover
       if (isset($data->filename) && !empty($data->filename)) {
         $node['tvdb_cover'] = $this->process_single_image($data->episodeName, $this->image_url . $data->filename, 'episodes');
       }

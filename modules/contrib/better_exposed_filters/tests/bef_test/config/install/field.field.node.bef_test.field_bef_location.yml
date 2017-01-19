@@ -5,6 +5,9 @@ dependencies:
     - field.storage.node.field_bef_location
     - node.type.bef_test
     - taxonomy.vocabulary.bef_test_location
+  enforced:
+    module:
+      - bef_test
 id: node.bef_test.field_bef_location
 field_name: field_bef_location
 entity_type: node

@@ -1,3 +1,7 @@
+.serie-container {
+    padding: 0;
+}
+
 .facet-container {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -12,15 +16,18 @@
 }
 
 .search-serie .button {
+    display: none;
+}
+
+.search-serie .search-button {
     position: absolute;
     margin: 0;
-    top: 2px;
-    right: 10px;
+    top: 10px;
+    right: 25px;
     background-color: transparent;
     color: black;
     border: none;
-    width: 30px;
-    overflow: hidden; 
+    cursor: pointer;
 }
 
 @media only screen and (min-width : 1200px) {
@@ -115,4 +122,22 @@
     color: black;
     font-size: 16px;
     padding-bottom: 5px;
+}
+
+/* Load more */
+.serie-wrapper .pager {
+    padding: 0px 15px;
+}
+
+.serie-wrapper .pager a {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    padding: 15px 0;
+    font-size: 18px;
+}
+
+.serie-wrapper .pager a:hover {
+    background-color: black;
+    color: white;
 }

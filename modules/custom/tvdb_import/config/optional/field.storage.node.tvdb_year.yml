@@ -1,15 +1,14 @@
+## field.storage.node.tvdb_year.yml
+
 langcode: en
 status: true
 dependencies:
   module:
     - node
-  enforced:
-    module:
-      - bef_test
-id: node.field_bef_boolean
-field_name: field_bef_boolean
+id: node.tvdb_year
+field_name: tvdb_year
 entity_type: node
-type: boolean
+type: float
 settings: {  }
 module: core
 locked: false

@@ -3,6 +3,9 @@ status: true
 dependencies:
   module:
     - node
+  enforced:
+    module:
+      - bef_test
 id: node.field_bef_email
 field_name: field_bef_email
 entity_type: node

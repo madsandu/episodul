@@ -11,6 +11,9 @@ dependencies:
     - node.type.bef_test
   module:
     - path
+  enforced:
+    module:
+      - bef_test
 _core:
   default_config_hash: R0o7gr9BG9vh0chu8DVw6qiEdviHNnz3BBYqkG8No6Q
 id: node.bef_test.default

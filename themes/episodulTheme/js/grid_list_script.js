@@ -2,31 +2,19 @@
 
     Drupal.behaviors.gridListView = {
         attach: function (context, settings) {
-            
+
             //remember product list/grid choice using localStorage
             $('.list-grid .list:not(.a-processed)', context).each(function () {
                 $(this).addClass('a-processed').on('click', function (e) {
                     $(this).closest('.serie-wrapper').addClass('list-view');
                     remove_grid_classes()
-                    //you need to pass string values, your variables display & block was not defined
-                    try {
-                        localStorage.setItem('displayType', 'list');
-                    } catch (error) {
-                        return false;
-                    }
                 });
             });
             
             $('.list-grid .grid:not(.a-processed)', context).each(function () {
                 $(this).addClass('a-processed').on('click', function (e) {
                     $(this).closest('.serie-wrapper').removeClass('list-view');
-                    add_grid_classes();
-                    //you need to pass string values, your variables display & block was not defined
-                    try {
-                        localStorage.setItem('displayType', '');
-                    } catch (error) {
-                        return false;
-                    }
+                    add_grid_classes();//you need to pass string values, your variables display & block was not defined
                 });
             });
         }
@@ -39,11 +27,12 @@
 
             $window.resize(function resize(){
                 if ($window.width() < 768) {
-                    remove_grid_classes()
+                    remove_grid_classes();
                     return $html.addClass('list-view');
+                    
                 } else if ($window.width() >= 768 && !$html.hasClass('list-view')) {
                     return $html.removeClass('list-view');
-                    add_grid_classes()
+                    add_grid_classes();
                 }
             }).trigger('resize');
         }
@@ -57,8 +46,21 @@
         }
     });
     
+    // Remove grid classes at ajax complete
+    $(document).ajaxComplete(function() {
+        if (block == 'list') {
+            remove_grid_classes();
+        }
+    });
+    
     
     function remove_grid_classes() {
+        //save display type to 'list'
+        try {
+            localStorage.setItem('displayType', 'list');
+        } catch (error) {
+            return false;
+        }
         // All series
         $('.serie-container').removeClass('col-lg-3');
         $('.serie-container').removeClass('col-md-3');
@@ -71,6 +73,12 @@
     }
 
     function add_grid_classes() {
+        //save display type as 'grid'
+        try {
+            localStorage.setItem('displayType', '');
+        } catch (error) {
+            return false;
+        }
         //All series
         $('.serie-container').addClass('col-lg-3');
         $('.serie-container').addClass('col-md-3');
@@ -83,4 +91,6 @@
     }
     
 })(jQuery);
+
+
 

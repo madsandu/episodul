@@ -3,7 +3,20 @@
  *
  * Provides some client-side functionality for the Better Exposed Filters module
  */
-(function ($) {
+(function ($, Drupal, drupalSettings) {
+  Drupal.behaviors.betterExposedFilters = {
+    attach: function(context, settings) {
+      // Add highlight class to checked checkboxes for better theming
+      $('.bef-tree input[type=checkbox], .bef-checkboxes input[type=checkbox]')
+        // Highlight newly selected checkboxes
+        .change(function() {
+          _bef_highlight(this, context);
+        })
+        .filter(':checked').closest('.form-item', context).addClass('highlight')
+      ;
+    }
+  };
+
   /*
    * Helper functions
    */
@@ -18,5 +31,4 @@
       : $elem.closest('.form-item', context).removeClass('highlight');
   }
 
-
-}) (jQuery);
+}) (jQuery, Drupal, drupalSettings);

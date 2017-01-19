@@ -11,6 +11,9 @@ dependencies:
     - node.type.bef_test
   module:
     - user
+  enforced:
+    module:
+      - bef_test
 id: node.bef_test.default
 targetEntityType: node
 bundle: bef_test

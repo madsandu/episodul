@@ -14,6 +14,9 @@ dependencies:
     - options
     - taxonomy
     - user
+  enforced:
+    module:
+      - bef_test
 _core:
   default_config_hash: Zv5cFBgri_6QnlZXIfOMwirX6vtdm3eqmIFeJMTt7Dc
 id: bef_test

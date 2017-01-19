@@ -312,16 +312,6 @@
         font-weight: normal;
         font-size: 16px;
     }
-    
-    .list-view .serie-bottom .serie-button {
-        font-weight: normal;
-        font-size: 13px;
-        padding: 10px 3px !important;
-    }
-    
-    .list-view .serie-overlay .serie-favorite .favorite-icon {
-        right: -12px;
-    }
 }    
 
 /*
@@ -401,26 +391,57 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
     font-size: 12px;
 }
 
-.actor-img {
-    width: 50px;
+div > div.views-field.views-field-tvdb-author-image.col-md-2 {
+    margin-bottom: 10px; 
 }
 
-#actor-name > h2 {
-    font-size: 12px;
-}
-
-#actor-name {
-    margin-top: 25px; 
-}
-
-.actor-role {
+div > div.views-field.views-field-tvdb-role.col-md-8 > div{
     float: right;
+}
+
+.actor-list .actor-image .actor-hover { 
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 70px;
+    width: 100%;
+}
+
+.actor-list .actor-image > img {
+    cursor: pointer 
+}
+
+.actor-list .actor-image:hover .actor-hover { 
+    display: block; 
+}
+
+div > div> div.views-field.views-field-name.col-md-2 {
     margin-top: 25px;
 }
 
-span.title > a {
-    color: red;
+.submenu {
+    width: 400px; 
+    margin: 0 auto
 }
+.submenu ul {
+    list-style-type:none;    
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.submenu li {
+    float: left;
+}
+
+div.submenu > ul > li > a{
+    text-decoration: none;
+    padding: 16px;
+    font-size: 18px;
+    color:#000;
+}
+
 /*
 * Favorite link
 */

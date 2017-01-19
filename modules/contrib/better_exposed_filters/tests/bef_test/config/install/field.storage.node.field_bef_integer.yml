@@ -4,6 +4,9 @@ dependencies:
   module:
     - node
     - options
+  enforced:
+    module:
+      - bef_test
 id: node.field_bef_integer
 field_name: field_bef_integer
 entity_type: node
