@@ -6,12 +6,13 @@
               {{ title_prefix }}
               {% if label %}
                 <span{{ title_attributes.addClass('block-title') }}>{{ label }}</span>
+                <span class="glyphicon glyphicon-menu-down"></span>
               {% endif %}
               {{ title_suffix }}
           </a>
         </h4>
       </div>
-      <div id="block-network-options" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div id="block-network-options" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
             {% block content %}
               {{ content }}

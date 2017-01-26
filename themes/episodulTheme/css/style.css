@@ -2,7 +2,20 @@
 * Series Teaser Display
 */
 
+a {
+    color:#008080;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    color: #00b3b3;
+}
+
 /* Desktop */
+.serie-wrapper .serie-container {
+    padding: 0;
+}
+
 .serie-wrapper .serie-container article {
     height: 350px;
     width: 200px;
@@ -39,7 +52,7 @@
     left: 9px;
     top: -27px;
     padding: 10px 56px;
-    background: black;
+    background: #008080;
     border-radius: 3px;
     color: white;
     font-weight: bold;
@@ -51,7 +64,7 @@
 
 .serie-container article:hover .serie-overlay {
     visibility: visible;
-    background-color: black;
+    background-color: #1a1a1a;
     opacity: 0.9;
     border-radius: 5px 5px 0 0;
 }
@@ -111,6 +124,65 @@
 
 .serie-container .serie-list-poster {
     display: none;
+}
+
+/* Search form */
+
+.search-serie {
+    margin-top: 20px;
+}
+
+.search-serie .form-inline .form-control {
+    width: 100%;
+}
+
+.search-serie .button {
+    display: none;
+}
+
+.search-serie .search-button {
+    position: absolute;
+    margin: 0;
+    top: 10px;
+    right: 25px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+/* sidebar and top bar */
+
+.top-bar {
+    background-color: #f3f3f3;
+    margin: 0 0 30px 0;
+    padding: 10px 0 20px 0;
+    z-index: 1;
+}
+
+.top-bar .facet-container-mobile h3 {
+    color: black;
+    margin-top: 5px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.top-bar .facet-container-mobile .facets-dropdown {
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+}
+
+@media only screen and (min-width : 1200px) {
+    .top-bar {
+        display:none;
+    }
+}
+
+@media only screen and (max-width : 1200px) {
+    .sidebar-first {
+        display: none;
+    }
 }
 
 /* List view */
@@ -267,8 +339,8 @@
 }
 
 .list-view article:hover .serie-button {
-    color: black;
-    background: white;
+    color: white;
+    background: #ff9900;
 }
 
 @media only screen and (max-width : 1200px) {
@@ -344,8 +416,16 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
 
 .serie-air-date, 
 .serie-air-time,
-#overview{
+#overview {
     color: #fff;
+}
+
+.rating {
+    color: #fff;
+}
+
+.imdbRatingPlugin a {
+    margin-right: 5px;
 }
 
 .field--label,#information {
@@ -397,6 +477,7 @@ div > div.views-field.views-field-tvdb-author-image.col-md-2 {
 
 div > div.views-field.views-field-tvdb-role.col-md-8 > div{
     float: right;
+    margin-top: 25px;
 }
 
 .actor-list .actor-image .actor-hover { 
@@ -442,6 +523,43 @@ div.submenu > ul > li > a{
     color:#000;
 }
 
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background-color: #008080;
+}
+
+.nav > li > a:hover {
+    background-color: #d9d9d9;
+}
+
+/*.nav-pills > li + li {
+    margin-left: 2px;
+    border-right: 2px solid #b3e6cc;
+    border-bottom: 2px solid #b3e6cc;
+    border-radius: 5px;  
+}
+div.submenu > ul > li:nth-child(1) {
+    border-left: 2px solid #b3e6cc;
+    border-bottom: 2px solid #b3e6cc;
+    border-right: 2px solid #b3e6cc; 
+}*/
+
+#actors > div > div > div.view-header,
+#episodes > div > div > div.view-header {
+    display: none;
+}
+
+.serie-gallery .views-row, 
+.serie-posters .views-row {
+    margin-top: 20px;
+}
+
+.pager li > a, .pager li > span {
+    padding: 12px 38px;
+}
+.pager li > a:hover, .pager li > span:hover {
+    background-color: #737373;
+    color: #fff;
+}
 /*
 * Favorite link
 */
@@ -525,6 +643,175 @@ div.submenu > ul > li > a{
     }
 }
 
+.facet-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.facet-container .facets-checkbox {
+    -webkit-appearance: none;
+    margin: 0 !important;
+    background-color: #fafafa;
+    border: 2px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px !important;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.facet-container .facets-checkbox:hover {
+    background-color: #e9ecee;
+    border: 2px solid grey;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+}
+
+
+.facet-container .facets-checkbox:active, .facets-checkbox:checked:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.facet-container .facets-checkbox:checked {
+    background-color: #e9ecee;
+    border: 2px solid #008080;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+    color: #99a1a7;
+}
+
+.facet-container .facets-checkbox:checked:after {
+    content: '\2B1B';
+    font-size: 14px;
+    position: absolute;
+    top: -1px;
+    left: 3px;
+    color: green;
+}
+
+.facet-container .facet-item label {
+    margin-left: 10px !important;
+    margin-bottom: 0 !important;
+}
+
+.facet-container .facet-item label span {
+    color: black;
+    font-size: 16px;
+    padding-bottom: 5px;
+}
+
+.facet-container .glyphicon {
+    float:right;
+}
+
+.facet-container .panel-title a:hover, .facet-container .panel-title a:focus {
+    text-decoration: none;
+}
+
+.panel-default > .panel-heading {
+    background-color: #b3b3b3;
+}
+/* Continuing facet */
+
+/*.facet-continuing input[type=checkbox] {
+    visibility: hidden;
+}
+
+.facet-continuing {
+        width: 80px;
+        height: 26px;
+        background: #333;
+        margin: 20px auto;
+
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        position: relative;
+
+        -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+        -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+        box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+
+.facet-continuing:after {
+        content: 'OFF';
+        font: 12px/26px Arial, sans-serif;
+        color: #000;
+        position: absolute;
+        right: 10px;
+        z-index: 0;
+        font-weight: bold;
+        text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.facet-continuing:before {
+        content: 'ON';
+        font: 12px/26px Arial, sans-serif;
+        color: #00bf00;
+        position: absolute;
+        left: 10px;
+        z-index: 0;
+        font-weight: bold;
+}
+
+.facet-continuing label {
+        display: block;
+        width: 34px;
+        height: 20px;
+
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+
+        -webkit-transition: all .4s ease;
+        -moz-transition: all .4s ease;
+        -o-transition: all .4s ease;
+        -ms-transition: all .4s ease;
+        transition: all .4s ease;
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        z-index: 1;
+
+        -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+        background: #fcfff4;
+
+        background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+}
+
+.facet-continuing input[type=checkbox]:checked + label {
+        left: 43px;
+}*/
+
+/* Facet Year */
+
+.facet-year .facets-dropdown {
+    width: 100%;
+    color: #333;
+    background-color: #b3b3b3;
+    border-color: #ddd;
+    padding: 10px 15px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    -webkit-appearance: none;
+}
+
+.facet-year > span {
+    position: absolute;
+    top: 15px;
+    right: 31px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 /* List-Grid buttons */
 
 .list-grid {
@@ -545,7 +832,7 @@ div.submenu > ul > li > a{
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 30px 30px;
-    border: 2px solid grey;
+    border: 2px solid #737373;
     background-size: 64px;
     cursor: pointer;
 }
@@ -555,8 +842,8 @@ div.submenu > ul > li > a{
     background-position: left 5px bottom 4px;
     cursor: default;
     pointer-events: none;
-    background-color: black;
-    border-color: black;
+    background-color: #008080;
+    border-color: #737373;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     z-index: 1;
@@ -575,8 +862,8 @@ div.submenu > ul > li > a{
     background-position: right 4px bottom 5px !important;
     cursor: default;
     pointer-events: none;
-    background-color: black;
-    border-color: black;
+    background-color: #008080;
+    border-color: #737373;
     z-index: 2;
 }
 
@@ -627,4 +914,22 @@ div.submenu > ul > li > a{
 
 .serie-wrapper .bef-exposed-form .select-wrapper:after {
     color: black;
+}
+
+/* Load more */
+.serie-wrapper .pager {
+    padding: 0px 15px;
+}
+
+.serie-wrapper .pager a {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    padding: 15px 0;
+    font-size: 18px;
+}
+
+.serie-wrapper .pager a:hover {
+    background-color: #737373;
+    color: white;
 }

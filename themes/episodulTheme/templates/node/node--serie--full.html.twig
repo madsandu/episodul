@@ -10,6 +10,8 @@
 %}
 
 <article{{ attributes.addClass(classes) }}>
+
+    {# Full width background region #}
     <div{{ content_attributes.addClass('content') }}>
         {%if content.tvdb_background%}
             <div class="serie-background clearfix" style="background:url('{{serie_background_url}}') no-repeat top center; background-size: cover;">
@@ -46,6 +48,8 @@
                             {%if content.tvdb_airstime%}
                                 <div class="serie-air-time">
                                     {{content.tvdb_airstime}}
+                                    {{imdb_rating}}
+                                    <script>(function(d, s, id){var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)){return; }js = d.createElement(s); js.id = id; js.src = "http://g-ec2.images-amazon.com/images/G/01/imdb/plugins/rating/js/rating.min.js"; stags.parentNode.insertBefore(js, stags); })(document, 'script', 'imdb-rating-api');</script>
                                 </div>
                             {%endif%}
                         </div>
@@ -95,16 +99,39 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="submenu">
-                    <ul class="nav nav-pills" role="tablist">
-                        <li role="presentation" class="active"><a href="#episodes" aria-controls="profile" role="tab" data-toggle="tab">Episodes</a></li>
-                        <li role="presentation"><a href="#actors" aria-controls="actors" role="tab" data-toggle="tab">Actors</a></li>
-                        <li role="presentation"><a href="#gallery" aria-controls="gallery" role="tab" data-toggle="tab">Gallery</a></li>
-                        <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
-                    </ul>
-                </div>
-            </div>
         {%endif%}
     </div>
+    {# Container with tabs region #}
+    <div class="container">
+        {# Tab menu #}
+        <div class="submenu">
+            <ul class="nav nav-pills" role="tablist">
+                <li role="presentation" class="active"><a href="#episodes" aria-controls="episodes" role="tab" data-toggle="tab">{% trans %}Episodes{% endtrans %}</a></li>
+                <li role="presentation"><a href="#actors" aria-controls="actors" role="tab" data-toggle="tab">{% trans %}Actors{% endtrans %}</a></li>
+                <li role="presentation"><a href="#gallery" aria-controls="gallery" role="tab" data-toggle="tab">{% trans %}Gallery{% endtrans %}</a></li>
+                <li role="presentation"><a href="#posters" aria-controls="posters" role="tab" data-toggle="tab">{% trans %}Posters{% endtrans %}</a></li>
+                    {#<li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">{% trans %}Reviews{% endtrans %}</a></li>#}             
+            </ul>
+        </div>
+        {# Tab content #}  
+        <div class="tab-content">
+            {# Episodes #}
+            <div role="tabpanel" class="tab-pane fade in active" id="episodes">
+                {{ episodes_block }}
+            </div>
+            {# Actors #}
+            <div role="tabpanel" class="tab-pane fade" id="actors">
+                {{actors_block}}
+            </div>
+            {# Gallery #}
+            <div role="tabpanel" class="tab-pane fade" id="gallery">
+                {{gallery_block}}
+            </div>
+            {# Posters #}
+            <div role="tabpanel" class="tab-pane fade" id="posters">
+                {{posters_block}}
+            </div>
+        </div>
+    </div>
+    {{related_block}}
 </article>

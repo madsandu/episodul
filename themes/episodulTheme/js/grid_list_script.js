@@ -6,14 +6,14 @@
             //remember product list/grid choice using localStorage
             $('.list-grid .list:not(.a-processed)', context).each(function () {
                 $(this).addClass('a-processed').on('click', function (e) {
-                    $(this).closest('.serie-wrapper').addClass('list-view');
+                    $(this).closest('.list-allowed').addClass('list-view');
                     remove_grid_classes()
                 });
             });
             
             $('.list-grid .grid:not(.a-processed)', context).each(function () {
                 $(this).addClass('a-processed').on('click', function (e) {
-                    $(this).closest('.serie-wrapper').removeClass('list-view');
+                    $(this).closest('.list-allowed').removeClass('list-view');
                     add_grid_classes();//you need to pass string values, your variables display & block was not defined
                 });
             });
@@ -23,7 +23,7 @@
     Drupal.behaviors.ForceListForMobile = {
         attach: function (context, settings) {
             var $window = $(window),
-                $html = $('.serie-wrapper');
+                $html = $('.lsit-allowed');
 
             $window.resize(function resize(){
                 if ($window.width() < 768) {
@@ -40,8 +40,8 @@
     
     $(document).ready(function(){
         block = localStorage.getItem('displayType');
-        if (block == 'list' && !$('serie-wrapper').hasClass('list-view')) {
-            $('.serie-wrapper').addClass('list-view');
+        if (block == 'list' && !$('list-allowed').hasClass('list-view')) {
+            $('.list-allowed').addClass('list-view');
             remove_grid_classes();
         }
     });

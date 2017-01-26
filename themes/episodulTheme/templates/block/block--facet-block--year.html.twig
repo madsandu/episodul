@@ -1,22 +1,6 @@
-<div class="col-xs-4 col-sm-12 facet-container">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingOne">
-        <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#block-year-options" aria-expanded="true" aria-controls="block-year-options">
-              {{ title_prefix }}
-              {% if label %}
-                <span{{ title_attributes.addClass('block-title') }}>{{ label }}</span>
-              {% endif %}
-              {{ title_suffix }}
-          </a>
-        </h4>
-      </div>
-      <div id="block-year-options" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-        <div class="panel-body">
-            {% block content %}
-              {{ content }}
-            {% endblock %}
-        </div>
-      </div>
-    </div>
+<div class="col-xs-4 col-sm-12 facet-year">
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+    <span class="glyphicon glyphicon-menu-down"></span>
 </div>
