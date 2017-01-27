@@ -32,7 +32,7 @@ function episodulTheme_preprocess_node(&$variables) {
       $variables['gallery_block'] = views_embed_view('gallery', 'gallery');
       $variables['posters_block'] = views_embed_view('posters', 'posters');
       $variables['related_block'] = views_embed_view('related_series', 'related');
-      if (!empty($node->tvdb_imdbid[0]->getValue())) {
+      if (!empty($node->tvdb_imdbid)) {
         $imdb_id = $node->tvdb_imdbid[0]->getValue()['value'];
         $variables['imdb_rating'] = array('#markup' => episodulTheme_get_imdb_rating($imdb_id));
       }
@@ -41,8 +41,15 @@ function episodulTheme_preprocess_node(&$variables) {
 }
 
 function episodulTheme_get_imdb_rating($imdb_id) {
-    $output = '<span class="imdbRatingPlugin" data-user="ur48250963" data-title=' . $imdb_id . ' data-style="p4">'
-            . '<a href="http://www.imdb.com/title/' . $imdb_id . '/?ref_=plg_rt_1"><img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png"/>'
+  if(!empty($imdb_id)) {
+    $output = '<span class="imdbRatingPlugin" '
+            . 'data-user="ur48250963" '
+            . 'data-title=' . $imdb_id . ' '
+            . 'data-style="p4">'
+            . '<a href="http://www.imdb.com/title/' . $imdb_id . '/?ref_=plg_rt_1">'
+            . '<img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png"/>'
             . '</a></span>';
     return $output;
+  }
+  return '';
 }

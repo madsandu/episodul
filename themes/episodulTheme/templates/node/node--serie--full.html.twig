@@ -15,30 +15,42 @@
     <div{{ content_attributes.addClass('content') }}>
         {%if content.tvdb_background%}
             <div class="serie-background clearfix" style="background:url('{{serie_background_url}}') no-repeat top center; background-size: cover;">
-                <div class ="black" style="background-color: black; height: 400px; opacity: 0.8">
-                    <div class="serie-header">
-                        <div class="col-md-2">
-                            {%if content.tvdb_poster%}
-                                <div class="serie-page-poster">
-                                    {{content.tvdb_poster}}
+                <div class="serie-header">
+                    <div class="col-md-2">
+                        {%if content.tvdb_poster%}
+                            <div class="serie-page-poster">
+                                {{content.tvdb_poster}}
+                            </div>
+                        {%endif%}
+                    </div>
+                    <div class="col-md-4">
+                        {#Title#}
+                        <div class="serie-title">
+                            {{ label }}
+                        </div>
+                        {#Overview#}
+                        <div id="overview">
+                            {%if content.body%}
+                                <div class="serie-description">
+                                    {{content.body}}
                                 </div>
                             {%endif%}
                         </div>
-                        <div class="col-md-8">
-                            {#Title#}
-                            <div class="serie-title">
-                                {{ label }}
-                            </div>
-                            {#Overview#}
-                            <div id="overview">
-                                {%if content.body%}
-                                    <div class="serie-description">
-                                        {{content.body}}
-                                    </div>
-                                {%endif%}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
+                    </div>
+                    <div class="col-md-3" id="favorites">
+                        <div class="serie-full-favorite">{{ content.flag_favorite_series }}</div>
+                        <h3>Last episodes</h3>
+                    </div>
+
+                    {#Serie information#}
+                    <div class="col-md-3" id="serie-information">
+                        {#<h3 id="information">Information</h3>#}
+                        <div id="serie-info">
+                            {%if imdb_rating%}
+                            <div class="imdb-rating">
+                                {{imdb_rating}}
+                            </div> 
+                            {%endif%}
                             {#Air date and time #}
                             {%if content.tvdb_airsdayofweek%}
                                 <div class="serie-air-date">
@@ -48,54 +60,48 @@
                             {%if content.tvdb_airstime%}
                                 <div class="serie-air-time">
                                     {{content.tvdb_airstime}}
-                                    {{imdb_rating}}
-                                    <script>(function(d, s, id){var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)){return; }js = d.createElement(s); js.id = id; js.src = "http://g-ec2.images-amazon.com/images/G/01/imdb/plugins/rating/js/rating.min.js"; stags.parentNode.insertBefore(js, stags); })(document, 'script', 'imdb-rating-api');</script>
+                                </div>
+                            {%endif%}
+
+                            {%if content.tvdb_genre%}
+                                <div class="serie-genre">
+                                    {{content.tvdb_genre}}
+                                </div>
+                            {%endif%}
+                            {%if content.tvdb_runtime%}
+                                <div class="serie-runtime">
+                                    {{content.tvdb_runtime}}
+                                </div>  
+                            {%endif%}
+                            {%if content.tvdb_rating%}
+                                <div class="serie-rating">
+                                    {{content.tvdb_rating}}
+                                </div>  
+                            {%endif%}
+                            {%if content.tvdb_status%}
+                                <div class="serie-status">
+                                    {{content.tvdb_status}}
+                                </div>  
+                            {%endif%}
+                            {%if content.tvdb_firstaired%}
+                                <div class="serie-firstaired">
+                                    {{content.tvdb_firstaired}}
+                                </div>
+                            {%endif%}
+                            {%if content.tvdb_network%}
+                                <div class="serie-network">
+                                    {{content.tvdb_network}}
+                                </div>  
+                            {%endif%}
+                            {%if content.tvdb_aliases%}
+                                <div class="serie-aka">
+                                    {{content.tvdb_aliases}}
                                 </div>
                             {%endif%}
                         </div>
-
-                        {#Serie information#}
-                        <div class="col-md-8" id="serie-information">
-                            <h3 id="information">Information</h3>
-                            <div id="serie-info">
-                                {%if content.tvdb_genre%}
-                                    <div class="serie-genre">
-                                        {{content.tvdb_genre}}
-                                    </div>
-                                {%endif%}
-                                {%if content.tvdb_runtime%}
-                                    <div class="serie-runtime">
-                                        {{content.tvdb_runtime}}
-                                    </div>  
-                                {%endif%}
-                                {%if content.tvdb_rating%}
-                                    <div class="serie-rating">
-                                        {{content.tvdb_rating}}
-                                    </div>  
-                                {%endif%}
-                                {%if content.tvdb_status%}
-                                    <div class="serie-status">
-                                        {{content.tvdb_status}}
-                                    </div>  
-                                {%endif%}
-                                {%if content.tvdb_firstaired%}
-                                    <div class="serie-firstaired">
-                                        {{content.tvdb_firstaired}}
-                                    </div>
-                                {%endif%}
-                                {%if content.tvdb_network%}
-                                    <div class="serie-network">
-                                        {{content.tvdb_network}}
-                                    </div>  
-                                {%endif%}
-                                {%if content.tvdb_aliases%}
-                                    <div class="serie-aka">
-                                        {{content.tvdb_aliases}}
-                                    </div>
-                                {%endif%}
-                            </div>
-                        </div>
-
+                    </div>
+                    <div class="col-md-12" id="related-series">
+                        {{related_block}}
                     </div>
                 </div>
             </div>
@@ -133,5 +139,5 @@
             </div>
         </div>
     </div>
-    {{related_block}}
+
 </article>
