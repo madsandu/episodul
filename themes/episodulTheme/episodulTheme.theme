@@ -53,3 +53,13 @@ function episodulTheme_get_imdb_rating($imdb_id) {
   }
   return '';
 }
+
+function episodulTheme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+	$header = \Drupal::requestStack()->getCurrentRequest();
+	if (!empty($header->attributes->get('exception'))) {
+		$status = $header->attributes->get('exception');
+		if ($status->getStatusCode() == 404) {     
+			$suggestions[] = 'page__404';
+		}
+        }
+}

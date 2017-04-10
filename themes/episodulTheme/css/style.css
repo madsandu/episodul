@@ -390,7 +390,7 @@ a:hover, a:focus {
 * Serie Episodes Block 
 */
 
-.region-content .serie-episode-block .first-aired-date {
+.episode-block .first-aired-date {
     float: right;
 }
 
@@ -455,7 +455,7 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
 }
 
 #favorites {
-    color: #fff;
+    color: white;
 }
 
 .serie-full-favorite .action-unflag .favorite-icon {
@@ -465,6 +465,7 @@ body > div.main-container.container-fluid.js-quickedit-main-content > div > sect
 .serie-full-favorite .favorite-icon {
     position: absolute;
     top: 10px;
+    right: 10px;
     width: 32px;
     height: 32px;
     border-radius: 16px;

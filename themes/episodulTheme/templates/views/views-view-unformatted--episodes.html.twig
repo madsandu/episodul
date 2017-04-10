@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+{% if title %}
+  <div class="panel-heading" role="tab" id="headingOne">
+    <h4 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="{{title}}" aria-expanded="true" aria-controls="season_{{title.raw}}_panel">
+          {{title}}
+        <span class="glyphicon glyphicon-menu-up"></span>
+      </a>
+    </h4>
+  </div>
+{% endif %}
+  <div id="{{title}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+        {% for row in rows %}
+            {%
+              set row_classes = [
+                default_row_class ? 'views-row',
+              ]
+            %}
+            <div{{ row.attributes.addClass(row_classes) }}>
+              {{ row.content }}
+            </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
